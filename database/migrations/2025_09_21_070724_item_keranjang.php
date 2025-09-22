@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('item_keranjang', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('keranjang_id')->constrained()->onDelete('cascade');
-            $table->foreignId('keranjang_id')->constrained()->onDelete('cascade');
+            $table->foreignId('keranjang_id')->constrained('keranjang')->onDelete('cascade');
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->integer('qty')->default(1);
             $table->timestamps();
 
-            $table->unique(['Keranjang_id', 'product_id']); // One product per Keranjang
+            $table->unique(['keranjang_id', 'product_id']); // One product per keranjang
         });
     }
 
