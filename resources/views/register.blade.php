@@ -3,12 +3,46 @@
 @section('title', 'Daftar - Mini Commerce')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
+<div class="min-h-screen bg-[#F9CDD5] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+            <!-- Sakura Decorations -->
+    <div class="absolute inset-0 pointer-events-none">
+        <!-- Sakura di kiri atas -->
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute top-10 left-10 w-20 h-20 opacity-30 animate-pulse">
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute top-32 left-32 w-16 h-16 opacity-20 animate-pulse" 
+             style="animation-delay: 0.5s;">
+        
+        <!-- Sakura di kanan atas -->
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute top-16 right-16 w-24 h-24 opacity-50 animate-pulse" 
+             style="animation-delay: 1s;">
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute top-40 right-40 w-14 h-14 opacity-50 animate-pulse" 
+             style="animation-delay: 1.5s;">
+        
+         <!-- Sakura di kiri bawah -->
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute bottom-20 left-24 w-20 h-20 opacity-50 animate-pulse" 
+             style="animation-delay: 1.2s;">
+             
+        <!-- Sakura di kanan bawah -->
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute bottom-20 right-24 w-20 h-20 opacity-50 animate-pulse" 
+             style="animation-delay: 1.2s;">
+    </div>
+
+        <div class="max-w-md w-full space-y-8">
         <!-- Header -->
         <div class="text-center">
             <div class="flex justify-center mb-6">
-                <div class="bg-primary-600 rounded-full p-4">
+                <div class="bg-[#B83556] rounded-full p-4">
                     <i class="fas fa-user-plus text-white text-3xl"></i>
                 </div>
             </div>
@@ -28,14 +62,14 @@
                 <!-- Name Field -->
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-user mr-2 text-primary-600"></i>Nama Lengkap
+                        <i class="fas fa-user mr-2 text-[#B83556]"></i>Nama Lengkap
                     </label>
                     <input id="name" 
                            name="name" 
                            type="text" 
                            value="{{ old('name') }}"
                            required 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors @error('name') border-red-500 @enderror"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B83556] focus:border-transparent transition-colors @error('name') border-red-500 @enderror"
                            placeholder="Masukkan nama lengkap Anda">
                     @error('name')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -45,14 +79,14 @@
                 <!-- Email Field -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-envelope mr-2 text-primary-600"></i>Email
+                        <i class="fas fa-envelope mr-2 text-[#B83556]"></i>Email
                     </label>
                     <input id="email" 
                            name="email" 
                            type="email" 
                            value="{{ old('email') }}"
                            required 
-                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors @error('email') border-red-500 @enderror"
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B83556] focus:border-transparent transition-colors @error('email') border-red-500 @enderror"
                            placeholder="Masukkan email Anda">
                     @error('email')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -62,14 +96,14 @@
                 <!-- Password Field -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-lock mr-2 text-primary-600"></i>Password
+                        <i class="fas fa-lock mr-2 text-[#B83556]"></i>Password
                     </label>
                     <div class="relative">
                         <input id="password" 
                                name="password" 
                                type="password" 
                                required 
-                               class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors @error('password') border-red-500 @enderror"
+                               class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B83556] focus:border-transparent transition-colors @error('password') border-red-500 @enderror"
                                placeholder="Masukkan password Anda">
                         <button type="button" 
                                 onclick="togglePassword('password')" 
@@ -85,14 +119,14 @@
                 <!-- Confirm Password Field -->
                 <div>
                     <label for="password_confirmation" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-lock mr-2 text-primary-600"></i>Konfirmasi Password
+                        <i class="fas fa-lock mr-2 text-[#B83556]"></i>Konfirmasi Password
                     </label>
                     <div class="relative">
                         <input id="password_confirmation" 
                                name="password_confirmation" 
                                type="password" 
                                required 
-                               class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors @error('password_confirmation') border-red-500 @enderror"
+                               class="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#B83556] focus:border-transparent transition-colors @error('password_confirmation') border-red-500 @enderror"
                                placeholder="Konfirmasi password Anda">
                         <button type="button" 
                                 onclick="togglePassword('password_confirmation')" 
@@ -107,7 +141,7 @@
 
                 <!-- Submit Button -->
                 <button type="submit" 
-                        class="w-full bg-primary-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors">
+                        class="w-full bg-[#B83556] text-white py-3 px-4 rounded-lg font-semibold hover:bg-[#FF9CBF] focus:outline-none focus:ring-2 focus:ring-[#B83556] focus:ring-offset-2 transition-colors hover:text-[#B83556]">
                     <i class="fas fa-user-plus mr-2"></i>Daftar Sekarang
                 </button>
             </form>
@@ -129,7 +163,7 @@
                 <p class="text-gray-600">
                     Sudah punya akun?
                     <a href="{{ route('auth.login') }}" 
-                       class="font-medium text-primary-600 hover:text-primary-700 transition-colors">
+                       class="font-medium text-[#B83556] hover:text-[#B83556] transition-colors">
                         Masuk sekarang
                     </a>
                 </p>
@@ -139,7 +173,7 @@
         <!-- Back to Home -->
         <div class="text-center">
             <a href="{{ route('home') }}" 
-               class="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium transition-colors">
+               class="inline-flex items-center text-[#B83556] hover:text-[#B83556] font-medium transition-colors">
                 <i class="fas fa-arrow-left mr-2"></i>
                 Kembali ke Beranda
             </a>
