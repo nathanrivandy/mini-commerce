@@ -14,16 +14,16 @@
     
     @stack('styles')
 </head>
-<body class="bg-gray-50">
+<body style="background-color: #F9CDD5;">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <nav style="background-color: #F9CDD5;" class="shadow-lg sticky top-0 z-50">
+        <div class="w-full px-2">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo -->
-                <div class="flex items-center">
-                    <a href="{{ route('home') }}" class="flex items-center space-x-2">
-                        <i class="fas fa-store text-primary-600 text-2xl"></i>
-                        <span class="text-xl font-bold text-gray-900">Mini Commerce</span>
+                <div class="flex items-center pl-2">
+                    <a href="{{ url('/') }}" class="flex items-center space-x-1">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-12 h-auto ml-4">
+                       <img src="{{ asset('images/logo-text.png') }}" alt="Mini Commerce" class="h-20 w-auto -ml-8">
                     </a>
                 </div>
 
@@ -44,7 +44,7 @@
                                 <i class="fas fa-chevron-down text-sm"></i>
                             </button>
                             
-                            <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                            <div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50" style="background-color: #F9CDD5;">
                                 <div class="py-1">
                                     @if(Auth::user()->isAdmin())
                                         <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -68,7 +68,7 @@
                         <a href="{{ route('login') }}" class="text-gray-600 hover:text-primary-600 transition-colors">
                             <i class="fas fa-sign-in-alt mr-1"></i>Login
                         </a>
-                        <a href="{{ route('auth.register') }}" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors">
+                        <a href="{{ route('auth.register') }}" class="bg-[#B83556] text-white px-4 py-2 rounded-lg hover:bg-[#FF9CBF] transition-colors">
                             Daftar
                         </a>
                     @endauth
@@ -84,7 +84,7 @@
         </div>
 
         <!-- Mobile menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+        <div id="mobile-menu" class="hidden md:hidden border-t" style="background-color: #F9CDD5;">
             <div class="px-4 pt-2 pb-3 space-y-1">
                 @auth
                     <a href="{{ route('cart.index') }}" class="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
@@ -140,9 +140,9 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- Company Info -->
                 <div class="col-span-1 md:col-span-2">
-                    <div class="flex items-center space-x-2 mb-4">
-                        <i class="fas fa-store text-primary-500 text-2xl"></i>
-                        <span class="text-xl font-bold">Mini Commerce</span>
+                    <div class="flex items-center space-x-1 mb-4">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-12 h-auto ml-2">
+                        <img src="{{ asset('images/logo-text.png') }}" alt="Mini Commerce" class="h-20 w-auto -ml-8">
                     </div>
                     <p class="text-gray-300 mb-4">
                         Platform e-commerce yang mendukung produk UMKM lokal Indonesia. 

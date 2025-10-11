@@ -4,23 +4,57 @@
 
 @section('content')
 <!-- Hero Section -->
-<div class="bg-gradient-to-r from-primary-500 to-primary-700 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+<div class="bg-gradient-to-r from-[#B83556] to-[#FF9CBF] text-white relative overflow-hidden">
+    <!-- Sakura Decorations -->
+    <div class="absolute inset-0 pointer-events-none">
+        <!-- Sakura di kiri atas -->
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute top-10 left-10 w-20 h-20 opacity-30 animate-pulse">
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute top-32 left-32 w-16 h-16 opacity-20 animate-pulse" 
+             style="animation-delay: 0.5s;">
+        
+        <!-- Sakura di kanan atas -->
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute top-16 right-16 w-24 h-24 opacity-50 animate-pulse" 
+             style="animation-delay: 1s;">
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute top-40 right-40 w-14 h-14 opacity-50 animate-pulse" 
+             style="animation-delay: 1.5s;">
+        
+        <!-- Sakura di kiri bawah -->
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute bottom-16 left-20 w-18 h-18 opacity-20 animate-pulse" 
+             style="animation-delay: 0.8s;">
+        
+        <!-- Sakura di kanan bawah -->
+        <img src="https://raw.githubusercontent.com/twitter/twemoji/master/assets/svg/1f338.svg" 
+             alt="sakura" 
+             class="absolute bottom-20 right-24 w-20 h-20 opacity-50 animate-pulse" 
+             style="animation-delay: 1.2s;">
+    </div>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
         <div class="text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-6">
                 Dukung Produk UMKM Lokal
             </h1>
-            <p class="text-xl md:text-2xl mb-8 text-primary-100">
+            <p class="text-xl md:text-2xl mb-8 text-primary-[#FCDD9D]">
                 Temukan berbagai produk berkualitas dari usaha kecil menengah terpercaya
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="{{ route('products.index') }}" 
-                   class="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                   class="bg-white text-[#504E76] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                     <i class="fas fa-shopping-bag mr-2"></i>Mulai Belanja
                 </a>
                 @guest
                 <a href="{{ route('auth.register') }}" 
-                   class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors">
+                   class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#FF9CBF] transition-colors">
                     <i class="fas fa-user-plus mr-2"></i>Daftar Sekarang
                 </a>
                 @endguest
@@ -41,9 +75,9 @@
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
         @foreach($categories as $category)
         <a href="{{ route('products.category', $category->slug) }}" 
-           class="group bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
+           class="group rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1" style="background-color: #FF9CBF;">
             <div class="p-6 text-center">
-                <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary-200 transition-colors">
+                <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors bg-white">
                     @php
                         $icon = 'fas fa-box'; // default icon
                         if (str_contains(strtolower($category->name), 'makanan') || str_contains(strtolower($category->name), 'minuman')) {
@@ -64,9 +98,9 @@
                             $icon = 'fas fa-book';
                         }
                     @endphp
-                    <i class="{{ $icon }} text-2xl text-primary-600"></i>
+                    <i class="{{ $icon }} text-2xl" style="color: #B83556;"></i>
                 </div>
-                <h3 class="font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+                <h3 class="font-semibold text-white mb-2 group-hover:text-gray-900 transition-colors">
                     {{ $category->name }}
                 </h3>
                 <p class="text-sm text-gray-500">
@@ -79,7 +113,7 @@
 </div>
 
 <!-- Featured Products Section -->
-<div class="bg-gray-50 py-16">
+<div class="py-16" style="background-color: #F9CDD5;">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
             <h2 class="text-3xl font-bold text-gray-900 mb-4">Produk Terbaru</h2>
@@ -90,14 +124,14 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             @foreach($featuredProducts as $product)
-            <div class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group">
+            <div class="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group" style="background-color: #FF9CBF;">
                 <div class="relative overflow-hidden rounded-t-xl">
                     <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/400x300?text=No+Image' }}" 
                          alt="{{ $product->name }}" 
                          class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     
                     @if($product->stock <= 10 && $product->stock > 0)
-                        <div class="absolute top-2 left-2 bg-warning-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                        <div class="absolute top-2 left-2 text-white px-2 py-1 rounded-full text-xs font-semibold" style="background-color: #F9C74F;">
                             Stok Terbatas
                         </div>
                     @elseif($product->stock == 0)
@@ -109,12 +143,12 @@
 
                 <div class="p-6">
                     <div class="mb-2">
-                        <span class="text-xs text-primary-600 font-semibold bg-primary-50 px-2 py-1 rounded-full">
+                        <span class="text-xs text-white font-semibold px-2 py-1 rounded-full" style="background-color: #B83556;">
                             {{ $product->category->name }}
                         </span>
                     </div>
                     
-                    <h3 class="font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+                    <h3 class="font-semibold text-white mb-2 group-hover:text-gray-900 transition-colors">
                         <a href="{{ route('products.show', $product->slug) }}">
                             {{ $product->name }}
                         </a>
@@ -125,7 +159,7 @@
                     </p>
                     
                     <div class="flex items-center justify-between mb-4">
-                        <span class="text-lg font-bold text-primary-600">
+                        <span class="text-lg font-bold text-gray-900">
                             {{ $product->formatted_price }}
                         </span>
                         <span class="text-sm text-gray-500">
@@ -142,7 +176,7 @@
                         @auth
                             @if($product->stock > 0)
                                 <button data-product-id="{{ $product->id }}" 
-                                        class="add-to-cart-btn bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors">
+                                        class="add-to-cart-btn text-white px-4 py-2 rounded-lg transition-colors" style="background-color: #B83556;">
                                     <i class="fas fa-cart-plus"></i>
                                 </button>
                             @else
@@ -153,7 +187,7 @@
                             @endif
                         @else
                             <a href="{{ route('login') }}" 
-                               class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors">
+                               class="text-white px-4 py-2 rounded-lg transition-colors" style="background-color: #B83556;">
                                 <i class="fas fa-cart-plus"></i>
                             </a>
                         @endauth
@@ -165,7 +199,7 @@
 
         <div class="text-center mt-12">
             <a href="{{ route('products.index') }}" 
-               class="bg-primary-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-600 transition-colors">
+               class="text-white px-8 py-3 rounded-lg font-semibold transition-colors" style="background-color: #B83556;">
                 Lihat Semua Produk
                 <i class="fas fa-arrow-right ml-2"></i>
             </a>
@@ -181,8 +215,8 @@
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="text-center">
-            <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-shield-alt text-2xl text-primary-600"></i>
+            <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-white">
+                <i class="fas fa-shield-alt text-2xl" style="color: #B83556;"></i>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 mb-2">Produk Berkualitas</h3>
             <p class="text-gray-600">
@@ -191,8 +225,8 @@
         </div>
 
         <div class="text-center">
-            <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-shipping-fast text-2xl text-primary-600"></i>
+            <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-white">
+                <i class="fas fa-shipping-fast text-2xl" style="color: #B83556;"></i>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 mb-2">Pengiriman Cepat</h3>
             <p class="text-gray-600">
@@ -201,8 +235,8 @@
         </div>
 
         <div class="text-center">
-            <div class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <i class="fas fa-handshake text-2xl text-primary-600"></i>
+            <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-white">
+                <i class="fas fa-handshake text-2xl" style="color: #B83556;"></i>
             </div>
             <h3 class="text-xl font-semibold text-gray-900 mb-2">Dukung UMKM</h3>
             <p class="text-gray-600">
