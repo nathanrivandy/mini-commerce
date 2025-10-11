@@ -9,6 +9,8 @@ class Keranjang extends Model
 {
     use HasFactory;
 
+    protected $table = 'keranjang';
+
     protected $fillable = [
         'user_id',
     ];
@@ -21,7 +23,7 @@ class Keranjang extends Model
 
     public function items()
     {
-        return $this->hasMany(Item_Keranjang::class);
+        return $this->hasMany(Item_Keranjang::class, 'keranjang_id');
     }
 
     // Accessors
@@ -89,5 +91,48 @@ class Keranjang extends Model
     public function clear()
     {
         $this->items()->delete();
+    }
+    
+    // Check if cart has items with issues (out of stock or inactive)
+    public function hasIssues()
+    {
+        foreach ($this->items as $item) {
+            if (!$item->product->is_active || $item->qty > $item->product->stock) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // Get items with issues
+    public function getItemsWithIssues()
+    {
+        return $this->items->filter(function ($item) {
+            return !$item->product->is_active || $item->qty > $item->product->stock;
+        });
+    }
+    
+    // Remove inactive products from cart
+    public function removeInactiveProducts()
+    {
+        foreach ($this->items as $item) {
+            if (!$item->product->is_active) {
+                $item->delete();
+            }
+        }
+    }
+    
+    // Adjust quantities to match available stock
+    public function adjustToAvailableStock()
+    {
+        foreach ($this->items as $item) {
+            if ($item->qty > $item->product->stock) {
+                if ($item->product->stock > 0) {
+                    $item->update(['qty' => $item->product->stock]);
+                } else {
+                    $item->delete();
+                }
+            }
+        }
     }
 }

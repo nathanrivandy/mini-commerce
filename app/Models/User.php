@@ -28,7 +28,7 @@ class User extends Authenticatable
     ];
 
     // Relationships
-    public function Keranjang()
+    public function keranjang()
     {
         return $this->hasOne(Keranjang::class);
     }
@@ -49,9 +49,15 @@ class User extends Authenticatable
         return $this->role === 'user';
     }
 
-    // Get or create Keranjang for user
+    // Get or create cart for user
+    public function getOrCreateCart()
+    {
+        return $this->keranjang ?? $this->keranjang()->create();
+    }
+    
+    // Alias untuk backward compatibility
     public function getOrCreateKeranjang()
     {
-        return $this->Keranjang ?? $this->Keranjang()->create();
+        return $this->getOrCreateCart();
     }
 }

@@ -2,4 +2,69 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* Custom styles dapat ditambahkan di sini */
+/* Custom styles dengan tema Blizzard Blue */
+
+@layer components {
+    /* Gradient backgrounds menggunakan Blizzard Blue */
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #A7D3EB 0%, #8cc4e3 100%);
+    }
+
+    .bg-gradient-primary-dark {
+        background: linear-gradient(135deg, #71b5db 0%, #5da7d3 100%);
+    }
+
+    /* Button styles */
+    .btn-primary {
+        @apply bg-primary-500 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 hover:bg-primary-600 transform hover:-translate-y-0.5;
+        box-shadow: 0 4px 14px 0 rgba(167, 211, 235, 0.25);
+    }
+
+    .btn-primary:hover {
+        box-shadow: 0 10px 40px 0 rgba(167, 211, 235, 0.35);
+    }
+
+    .btn-secondary {
+        @apply bg-secondary-500 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 hover:bg-secondary-600 hover:shadow-lg transform hover:-translate-y-0.5;
+    }
+
+    .btn-danger {
+        @apply bg-danger-500 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 hover:bg-danger-600 hover:shadow-lg transform hover:-translate-y-0.5;
+    }
+
+    .btn-warning {
+        @apply bg-warning-500 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-200 hover:bg-warning-600 hover:shadow-lg transform hover:-translate-y-0.5;
+    }
+
+    /* Input focus dengan warna Blizzard Blue */
+    .input-primary:focus {
+        @apply outline-none ring-2 ring-primary-500 border-primary-500;
+    }
+
+    /* Card dengan efek hover Blizzard Blue */
+    .card-hover {
+        @apply transition-all duration-300 hover:-translate-y-2;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .card-hover:hover {
+        box-shadow: 0 10px 40px 0 rgba(167, 211, 235, 0.35);
+    }
+
+    /* Badge dengan warna-warna tema */
+    .badge-primary {
+        @apply bg-primary-100 text-primary-800 px-3 py-1 rounded-full text-sm font-medium;
+    }
+
+    .badge-secondary {
+        @apply bg-secondary-100 text-secondary-800 px-3 py-1 rounded-full text-sm font-medium;
+    }
+
+    .badge-danger {
+        @apply bg-danger-100 text-danger-800 px-3 py-1 rounded-full text-sm font-medium;
+    }
+
+    .badge-warning {
+        @apply bg-warning-100 text-warning-800 px-3 py-1 rounded-full text-sm font-medium;
+    }
+}

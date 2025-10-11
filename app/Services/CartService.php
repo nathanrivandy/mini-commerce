@@ -81,11 +81,11 @@ class CartService
                 ];
             }
 
-            if ($quantity <= 0) {
-                $item->delete();
+            // Quantity must be at least 1 (validation already done in controller)
+            if ($quantity < 1) {
                 return [
-                    'success' => true,
-                    'message' => 'Item berhasil dihapus dari keranjang'
+                    'success' => false,
+                    'message' => 'Jumlah minimal adalah 1'
                 ];
             }
 
@@ -93,7 +93,7 @@ class CartService
             if (!$item->product->hasStock($quantity)) {
                 return [
                     'success' => false,
-                    'message' => 'Stok tidak mencukupi'
+                    'message' => "Stok tidak mencukupi. Stok tersedia: {$item->product->stock}"
                 ];
             }
 
@@ -161,11 +161,14 @@ class CartService
     {
         $cart = $this->getOrCreateCart($user);
         
+        // Eager load relationships to avoid N+1 queries
+        $cart->load(['items.product.category']);
+        
         return [
             'total_items' => $cart->total_items,
             'total_price' => $cart->total_price,
             'formatted_total' => $cart->formatted_total_price,
-            'items' => $cart->items->load('product')
+            'items' => $cart->items
         ];
     }
 }

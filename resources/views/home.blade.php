@@ -4,7 +4,7 @@
 
 @section('content')
 <!-- Hero Section -->
-<div class="bg-gradient-to-r from-primary-600 to-primary-800 text-white">
+<div class="bg-gradient-to-r from-primary-500 to-primary-700 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div class="text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-6">
@@ -97,11 +97,11 @@
                          class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                     
                     @if($product->stock <= 10 && $product->stock > 0)
-                        <div class="absolute top-2 left-2 bg-yellow-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                        <div class="absolute top-2 left-2 bg-warning-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
                             Stok Terbatas
                         </div>
                     @elseif($product->stock == 0)
-                        <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
+                        <div class="absolute top-2 left-2 bg-danger-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
                             Habis
                         </div>
                     @endif
@@ -142,7 +142,7 @@
                         @auth
                             @if($product->stock > 0)
                                 <button data-product-id="{{ $product->id }}" 
-                                        class="add-to-cart-btn bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                                        class="add-to-cart-btn bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors">
                                     <i class="fas fa-cart-plus"></i>
                                 </button>
                             @else
@@ -153,7 +153,7 @@
                             @endif
                         @else
                             <a href="{{ route('login') }}" 
-                               class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                               class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors">
                                 <i class="fas fa-cart-plus"></i>
                             </a>
                         @endauth
@@ -165,7 +165,7 @@
 
         <div class="text-center mt-12">
             <a href="{{ route('products.index') }}" 
-               class="bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors">
+               class="bg-primary-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-600 transition-colors">
                 Lihat Semua Produk
                 <i class="fas fa-arrow-right ml-2"></i>
             </a>
@@ -227,10 +227,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function addToCart(productId) {
-    fetch('/cart/add', {
+    fetch('/api/cart/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Accept': 'application/json',
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         },
         body: JSON.stringify({
@@ -238,26 +239,36 @@ function addToCart(productId) {
             quantity: 1
         })
     })
-    .then(response => response.json())
+    .then(response => {
+        // Check if response is ok
+        if (!response.ok) {
+            return response.json().then(data => {
+                throw new Error(data.message || 'Terjadi kesalahan');
+            });
+        }
+        return response.json();
+    })
     .then(data => {
+        console.log('Response data:', data); // For debugging
         if (data.success) {
             // Show success message
             showNotification(data.message, 'success');
-            // Update cart count
+            // Update cart count immediately (function from app.blade.php)
             if (typeof updateCartCount === 'function') {
                 updateCartCount();
             }
         } else {
-            showNotification(data.message, 'error');
+            showNotification(data.message || 'Terjadi kesalahan', 'error');
         }
     })
     .catch(error => {
-        showNotification('Terjadi kesalahan', 'error');
+        console.error('Cart error:', error);
+        showNotification(error.message || 'Terjadi kesalahan saat menambahkan produk', 'error');
     });
 }
 
 function showNotification(message, type) {
-    const bgColor = type === 'success' ? 'bg-green-500' : 'bg-red-500';
+    const bgColor = type === 'success' ? 'bg-secondary-500' : 'bg-danger-500';
     const notification = document.createElement('div');
     notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300`;
     notification.textContent = message;

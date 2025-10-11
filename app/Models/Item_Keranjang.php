@@ -9,8 +9,10 @@ class Item_Keranjang extends Model
 {
     use HasFactory;
 
+    protected $table = 'item_keranjang';
+
     protected $fillable = [
-        'cart_id',
+        'keranjang_id',
         'product_id',
         'qty',
     ];
@@ -18,7 +20,7 @@ class Item_Keranjang extends Model
     // Relationships
     public function cart()
     {
-        return $this->belongsTo(Keranjang::class);
+        return $this->belongsTo(Keranjang::class, 'keranjang_id');
     }
 
     public function product()

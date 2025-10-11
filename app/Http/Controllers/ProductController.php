@@ -60,7 +60,6 @@ class ProductController extends Controller
     /**
      * Search products
      */
-
     public function search(Request $request)
     {
         $products = $this->productService->getProducts($request);
@@ -68,67 +67,5 @@ class ProductController extends Controller
         $searchTerm = $request->get('search', '');
 
         return view('products.index', compact('products', 'categories', 'searchTerm'));
-    }
-
-    /**
-     * Get featured products for homepage
-     */
-    public function featured()
-    {
-        $featuredProducts = $this->productService->getFeaturedProducts(8);
-        
-        return response()->json([
-            'success' => true,
-            'products' => $featuredProducts
-        ]);
-    }
-
-    /**
-     * Get product details via AJAX
-     */
-    public function details($id)
-    {
-        try {
-            $product = Product::with('category')->findOrFail($id);
-            
-            return response()->json([
-                'success' => true,
-                'product' => $product
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Produk tidak ditemukan'
-            ], 404);
-        }
-    }
-
-    /**
-     * Check product stock
-     */
-    public function checkStock(Request $request, $id)
-    {
-        $request->validate([
-            'quantity' => 'required|integer|min:1'
-        ]);
-
-        try {
-            $product = Product::findOrFail($id);
-            $hasStock = $product->hasStock($request->quantity);
-            
-            return response()->json([
-                'success' => true,
-                'has_stock' => $hasStock,
-                'available_stock' => $product->stock,
-                'message' => $hasStock 
-                    ? 'Stok tersedia' 
-                    : 'Stok tidak mencukupi. Tersedia: ' . $product->stock
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Produk tidak ditemukan'
-            ], 404);
-        }
     }
 }

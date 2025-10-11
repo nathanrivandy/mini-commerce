@@ -27,18 +27,6 @@
                     </a>
                 </div>
 
-                <!-- Search Bar -->
-                <div class="hidden md:block flex-1 max-w-lg mx-8">
-                    <form action="{{ route('products.search') }}" method="GET" class="relative">
-                        <input type="text" 
-                               name="search" 
-                               value="{{ request('search') }}"
-                               placeholder="Cari produk..." 
-                               class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
-                        <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    </form>
-                </div>
-
                 <!-- Right Menu -->
                 <div class="flex items-center space-x-4">
                     @auth
@@ -80,7 +68,7 @@
                         <a href="{{ route('login') }}" class="text-gray-600 hover:text-primary-600 transition-colors">
                             <i class="fas fa-sign-in-alt mr-1"></i>Login
                         </a>
-                        <a href="{{ route('auth.register') }}" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        <a href="{{ route('auth.register') }}" class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition-colors">
                             Daftar
                         </a>
                     @endauth
@@ -98,16 +86,6 @@
         <!-- Mobile menu -->
         <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
             <div class="px-4 pt-2 pb-3 space-y-1">
-                <!-- Mobile search -->
-                <form action="{{ route('products.search') }}" method="GET" class="relative mb-3">
-                    <input type="text" 
-                           name="search" 
-                           value="{{ request('search') }}"
-                           placeholder="Cari produk..." 
-                           class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                </form>
-
                 @auth
                     <a href="{{ route('cart.index') }}" class="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
                         <i class="fas fa-shopping-cart mr-2"></i>Keranjang
@@ -134,7 +112,7 @@
 
     <!-- Flash Messages -->
     @if(session('success'))
-        <div id="flash-message" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mx-4 mt-4" role="alert">
+        <div id="flash-message" class="bg-secondary-100 border border-secondary-400 text-secondary-700 px-4 py-3 rounded relative mx-4 mt-4" role="alert">
             <span class="block sm:inline">{{ session('success') }}</span>
             <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
                 <i class="fas fa-times"></i>
@@ -143,7 +121,7 @@
     @endif
 
     @if(session('error'))
-        <div id="flash-message" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mx-4 mt-4" role="alert">
+        <div id="flash-message" class="bg-danger-100 border border-danger-400 text-danger-700 px-4 py-3 rounded relative mx-4 mt-4" role="alert">
             <span class="block sm:inline">{{ session('error') }}</span>
             <span class="absolute top-0 bottom-0 right-0 px-4 py-3 cursor-pointer" onclick="this.parentElement.style.display='none';">
                 <i class="fas fa-times"></i>

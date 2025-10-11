@@ -32,9 +32,15 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function KeranjangItems()
+    public function cartItems()
     {
         return $this->hasMany(Item_Keranjang::class);
+    }
+    
+    // Alias untuk backward compatibility
+    public function KeranjangItems()
+    {
+        return $this->cartItems();
     }
 
     public function orderItems()
