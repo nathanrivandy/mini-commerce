@@ -302,9 +302,10 @@ function addToCart(productId) {
 }
 
 function showNotification(message, type) {
-    const bgColor = type === 'success' ? 'bg-secondary-500' : 'bg-danger-500';
+    const bgColor = type === 'success' ? '#10B981' : '#EF4444';
     const notification = document.createElement('div');
-    notification.className = `fixed top-4 right-4 ${bgColor} text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300`;
+    notification.className = `fixed top-4 right-4 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300`;
+    notification.style.backgroundColor = bgColor;
     notification.textContent = message;
     
     document.body.appendChild(notification);

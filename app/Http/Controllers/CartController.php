@@ -39,7 +39,7 @@ class CartController extends Controller
             session()->flash('warning', implode('. ', $issues));
         }
         
-        return view('cart.index', $cartSummary);
+        return view('cart', $cartSummary);
     }
 
     public function add(Request $request)

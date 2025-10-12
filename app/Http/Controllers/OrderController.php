@@ -22,6 +22,18 @@ class OrderController extends Controller
         return view('orders.index', compact('orders'));
     }
 
+    public function create()
+    {
+        // Redirect to checkout page
+        return redirect()->route('checkout.index');
+    }
+
+    public function store(Request $request)
+    {
+        // Redirect to checkout store
+        return redirect()->route('checkout.store');
+    }
+
     public function show($id)
     {
         $order = $this->orderService->getOrderDetails($id, Auth::user());
