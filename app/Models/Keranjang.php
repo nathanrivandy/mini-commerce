@@ -29,7 +29,7 @@ class Keranjang extends Model
     // Accessors
     public function getTotalItemsAttribute()
     {
-        return $this->items->sum('qty');
+        return $this->items->count();
     }
 
     public function getTotalPriceAttribute()
