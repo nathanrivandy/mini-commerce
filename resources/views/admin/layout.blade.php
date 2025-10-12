@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin Dashboard - RILOKA')</title>
+    <title>@yield('title', 'Admin Dashboard - Mini Commerce')</title>
     
     <!-- Compiled CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -21,13 +21,10 @@
             <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white border-r border-gray-200 px-6 pb-4 shadow-sm">
                 <!-- Logo -->
                 <div class="flex h-16 shrink-0 items-center">
-                    <img class="w-10 h-10 rounded-lg object-cover flex-shrink-0" 
-                         src="{{ asset('images/IMG_5324.PNG') }}" 
-                         alt="Logo">
-                    <div class="ml-3">
-                        <h1 class="text-lg font-bold text-gray-900 leading-none">RILOKA</h1>
-                        <p class="text-xs text-gray-500 leading-none">Admin Panel</p>
-                    </div>
+                    <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-1">
+                        <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-12 h-auto">
+                        <img src="{{ asset('images/logo-text.png') }}" alt="Mini Commerce" class="h-20 w-auto -ml-8">
+                    </a>
                 </div>
                 
                 <!-- Navigation -->
@@ -37,12 +34,21 @@
                             <ul role="list" class="space-y-1">
                                 <!-- Dashboard -->
                                 <li>
-                                    <a href="{{ route('admin.dashboard') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors {{ request()->routeIs('admin.dashboard') ? 'bg-primary-100 text-primary-700' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50' }}">
+                                    @if(request()->routeIs('admin.dashboard'))
+                                    <a href="{{ route('admin.dashboard') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors text-gray-700" style="background-color: #FF9CBF;">
                                         <div class="w-5 h-5 flex items-center justify-center shrink-0">
-                                            <i class="fas fa-chart-pie text-sm {{ request()->routeIs('admin.dashboard') ? 'text-primary-600' : 'text-gray-400 group-hover:text-primary-500' }}"></i>
+                                            <i class="fas fa-chart-pie text-sm text-white"></i>
                                         </div>
-                                        Dashboard
+                                        <span class="text-white font-semibold">Dashboard</span>
                                     </a>
+                                    @else
+                                    <a href="{{ route('admin.dashboard') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+                                        <div class="w-5 h-5 flex items-center justify-center shrink-0">
+                                            <i class="fas fa-chart-pie text-sm text-gray-400 group-hover:text-gray-600"></i>
+                                        </div>
+                                        <span>Dashboard</span>
+                                    </a>
+                                    @endif
                                 </li>
                                 
                                 <!-- Products -->
@@ -50,28 +56,55 @@
                                     <div class="text-xs font-semibold leading-6 text-gray-400 mb-2">PRODUK</div>
                                     <ul class="space-y-1">
                                         <li>
-                                            <a href="{{ route('admin.products.index') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors {{ request()->routeIs('admin.products.index') ? 'bg-primary-100 text-primary-700' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50' }}">
+                                            @if(request()->routeIs('admin.products.index'))
+                                            <a href="{{ route('admin.products.index') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors text-gray-700" style="background-color: #FF9CBF;">
                                                 <div class="w-5 h-5 flex items-center justify-center shrink-0">
-                                                    <i class="fas fa-box text-sm {{ request()->routeIs('admin.products.index') ? 'text-primary-600' : 'text-gray-400 group-hover:text-primary-500' }}"></i>
+                                                    <i class="fas fa-box text-sm text-white"></i>
                                                 </div>
-                                                Semua Produk
+                                                <span class="text-white font-semibold">Semua Produk</span>
                                             </a>
+                                            @else
+                                            <a href="{{ route('admin.products.index') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+                                                <div class="w-5 h-5 flex items-center justify-center shrink-0">
+                                                    <i class="fas fa-box text-sm text-gray-400 group-hover:text-gray-600"></i>
+                                                </div>
+                                                <span>Semua Produk</span>
+                                            </a>
+                                            @endif
                                         </li>
                                         <li>
-                                            <a href="{{ route('admin.products.create') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors {{ request()->routeIs('admin.products.create') ? 'bg-primary-100 text-primary-700' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50' }}">
+                                            @if(request()->routeIs('admin.products.create'))
+                                            <a href="{{ route('admin.products.create') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors text-gray-700" style="background-color: #FF9CBF;">
                                                 <div class="w-5 h-5 flex items-center justify-center shrink-0">
-                                                    <i class="fas fa-plus text-sm {{ request()->routeIs('admin.products.create') ? 'text-primary-600' : 'text-gray-400 group-hover:text-primary-500' }}"></i>
+                                                    <i class="fas fa-plus text-sm text-white"></i>
                                                 </div>
-                                                Tambah Produk
+                                                <span class="text-white font-semibold">Tambah Produk</span>
                                             </a>
+                                            @else
+                                            <a href="{{ route('admin.products.create') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+                                                <div class="w-5 h-5 flex items-center justify-center shrink-0">
+                                                    <i class="fas fa-plus text-sm text-gray-400 group-hover:text-gray-600"></i>
+                                                </div>
+                                                <span>Tambah Produk</span>
+                                            </a>
+                                            @endif
                                         </li>
                                         <li>
-                                            <a href="{{ route('admin.categories.index') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors {{ request()->routeIs('admin.categories.*') ? 'bg-primary-100 text-primary-700' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50' }}">
+                                            @if(request()->routeIs('admin.categories.*'))
+                                            <a href="{{ route('admin.categories.index') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors text-gray-700" style="background-color: #FF9CBF;">
                                                 <div class="w-5 h-5 flex items-center justify-center shrink-0">
-                                                    <i class="fas fa-tags text-sm {{ request()->routeIs('admin.categories.*') ? 'text-primary-600' : 'text-gray-400 group-hover:text-primary-500' }}"></i>
+                                                    <i class="fas fa-tags text-sm text-white"></i>
                                                 </div>
-                                                Kategori
+                                                <span class="text-white font-semibold">Kategori</span>
                                             </a>
+                                            @else
+                                            <a href="{{ route('admin.categories.index') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+                                                <div class="w-5 h-5 flex items-center justify-center shrink-0">
+                                                    <i class="fas fa-tags text-sm text-gray-400 group-hover:text-gray-600"></i>
+                                                </div>
+                                                <span>Kategori</span>
+                                            </a>
+                                            @endif
                                         </li>
                                     </ul>
                                 </li>
@@ -81,12 +114,21 @@
                                     <div class="text-xs font-semibold leading-6 text-gray-400 mb-2">PESANAN</div>
                                     <ul class="space-y-1">
                                         <li>
-                                            <a href="{{ route('admin.orders.index') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors {{ request()->routeIs('admin.orders.*') ? 'bg-primary-100 text-primary-700' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50' }}">
+                                            @if(request()->routeIs('admin.orders.*'))
+                                            <a href="{{ route('admin.orders.index') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors text-gray-700" style="background-color: #FF9CBF;">
                                                 <div class="w-5 h-5 flex items-center justify-center shrink-0">
-                                                    <i class="fas fa-shopping-cart text-sm {{ request()->routeIs('admin.orders.*') ? 'text-primary-600' : 'text-gray-400 group-hover:text-primary-500' }}"></i>
+                                                    <i class="fas fa-shopping-cart text-sm text-white"></i>
                                                 </div>
-                                                Semua Pesanan
+                                                <span class="text-white font-semibold">Semua Pesanan</span>
                                             </a>
+                                            @else
+                                            <a href="{{ route('admin.orders.index') }}" class="group flex items-center gap-x-3 rounded-lg p-3 text-sm font-medium transition-colors text-gray-700 hover:text-gray-900 hover:bg-gray-50">
+                                                <div class="w-5 h-5 flex items-center justify-center shrink-0">
+                                                    <i class="fas fa-shopping-cart text-sm text-gray-400 group-hover:text-gray-600"></i>
+                                                </div>
+                                                <span>Semua Pesanan</span>
+                                            </a>
+                                            @endif
                                         </li>
                                     </ul>
                                 </li>
@@ -95,16 +137,16 @@
                         
                         <!-- Bottom section -->
                         <li class="mt-auto">
-                            <div class="mt-4 p-3 bg-gray-50 rounded-lg">
+                            <div class="mt-4 p-3 rounded-lg" style="background-color: #FFE5EC;">
                                 <div class="flex items-center">
-                                    <div class="h-8 w-8 rounded-full bg-primary-500 flex items-center justify-center">
+                                    <div class="h-8 w-8 rounded-full flex items-center justify-center" style="background-color: #FF9CBF;">
                                         <span class="text-sm font-medium text-white">{{ substr(Auth::user()->name, 0, 1) }}</span>
                                     </div>
                                     <div class="ml-3">
                                         <p class="text-sm font-medium text-gray-900">{{ Auth::user()->name }}</p>
                                         <form action="{{ route('logout') }}" method="POST" class="inline">
                                             @csrf
-                                            <button type="submit" class="text-xs text-gray-500 hover:text-danger-600">Logout</button>
+                                            <button type="submit" class="text-xs hover:text-white" style="color: #B83556;">Logout</button>
                                         </form>
                                     </div>
                                 </div>
@@ -126,10 +168,10 @@
                 
                 <div class="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
                     <div class="flex items-center">
-                        <img class="w-8 h-8 rounded-lg object-cover mr-3" 
-                             src="{{ asset('images/IMG_5324.PNG') }}" 
-                             alt="Logo">
-                        <h1 class="text-lg font-bold text-gray-900">RILOKA</h1>
+                        <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-1">
+                            <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-10 h-auto">
+                            <img src="{{ asset('images/logo-text.png') }}" alt="Mini Commerce" class="h-16 w-auto -ml-6">
+                        </a>
                     </div>
                 </div>
                 
@@ -155,10 +197,10 @@
                         <!-- Mobile sidebar content -->
                         <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
                             <div class="flex h-16 shrink-0 items-center">
-                                <img class="w-8 h-8 rounded-lg object-cover mr-3" 
-                                     src="{{ asset('images/IMG_5324.PNG') }}" 
-                                     alt="Logo">
-                                <h1 class="text-lg font-bold text-gray-900">RILOKA</h1>
+                                <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-1">
+                                    <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-10 h-auto">
+                                    <img src="{{ asset('images/logo-text.png') }}" alt="Mini Commerce" class="h-16 w-auto -ml-6">
+                                </a>
                             </div>
                             
                             <nav class="flex flex-1 flex-col">
@@ -166,26 +208,47 @@
                                     <li>
                                         <ul role="list" class="-mx-2 space-y-1">
                                             <li>
-                                                <a href="{{ route('admin.dashboard') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold {{ request()->routeIs('admin.dashboard') ? 'bg-gray-50 text-primary-600' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50' }}">
+                                                @if(request()->routeIs('admin.dashboard'))
+                                                <a href="{{ route('admin.dashboard') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-white" style="background-color: #FF9CBF;">
+                                                    <i class="fas fa-chart-pie h-6 w-6 shrink-0 text-white"></i>
+                                                    Dashboard
+                                                </a>
+                                                @else
+                                                <a href="{{ route('admin.dashboard') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-50">
                                                     <i class="fas fa-chart-pie h-6 w-6 shrink-0"></i>
                                                     Dashboard
                                                 </a>
+                                                @endif
                                             </li>
                                             
                                             <li>
                                                 <div class="text-xs font-semibold leading-6 text-gray-400 mt-6 mb-2">PRODUK</div>
                                                 <ul class="-mx-2 space-y-1">
                                                     <li>
-                                                        <a href="{{ route('admin.products.index') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold {{ request()->routeIs('admin.products.index') ? 'bg-gray-50 text-primary-600' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50' }}">
+                                                        @if(request()->routeIs('admin.products.index'))
+                                                        <a href="{{ route('admin.products.index') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-white" style="background-color: #FF9CBF;">
+                                                            <i class="fas fa-box h-6 w-6 shrink-0 text-white"></i>
+                                                            Semua Produk
+                                                        </a>
+                                                        @else
+                                                        <a href="{{ route('admin.products.index') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-50">
                                                             <i class="fas fa-box h-6 w-6 shrink-0"></i>
                                                             Semua Produk
                                                         </a>
+                                                        @endif
                                                     </li>
                                                     <li>
-                                                        <a href="{{ route('admin.products.create') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold {{ request()->routeIs('admin.products.create') ? 'bg-gray-50 text-primary-600' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50' }}">
+                                                        @if(request()->routeIs('admin.products.create'))
+                                                        <a href="{{ route('admin.products.create') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-white" style="background-color: #FF9CBF;">
+                                                            <i class="fas fa-plus h-6 w-6 shrink-0 text-white"></i>
+                                                            Tambah Produk
+                                                        </a>
+                                                        @else
+                                                        <a href="{{ route('admin.products.create') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-50">
                                                             <i class="fas fa-plus h-6 w-6 shrink-0"></i>
                                                             Tambah Produk
                                                         </a>
+                                                        @endif
                                                     </li>
                                                 </ul>
                                             </li>
@@ -194,10 +257,17 @@
                                                 <div class="text-xs font-semibold leading-6 text-gray-400 mt-6 mb-2">PESANAN</div>
                                                 <ul class="-mx-2 space-y-1">
                                                     <li>
-                                                        <a href="{{ route('admin.orders.index') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold {{ request()->routeIs('admin.orders.*') ? 'bg-gray-50 text-primary-600' : 'text-gray-700 hover:text-primary-600 hover:bg-gray-50' }}">
+                                                        @if(request()->routeIs('admin.orders.*'))
+                                                        <a href="{{ route('admin.orders.index') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-white" style="background-color: #FF9CBF;">
+                                                            <i class="fas fa-shopping-cart h-6 w-6 shrink-0 text-white"></i>
+                                                            Semua Pesanan
+                                                        </a>
+                                                        @else
+                                                        <a href="{{ route('admin.orders.index') }}" class="group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold text-gray-700 hover:text-gray-900 hover:bg-gray-50">
                                                             <i class="fas fa-shopping-cart h-6 w-6 shrink-0"></i>
                                                             Semua Pesanan
                                                         </a>
+                                                        @endif
                                                     </li>
                                                 </ul>
                                             </li>
