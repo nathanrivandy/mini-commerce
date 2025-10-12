@@ -31,33 +31,39 @@
                 <div class="flex items-center space-x-4">
                     @auth
                         <!-- Cart -->
-                        <a href="{{ route('cart.index') }}" class="relative p-2 text-gray-600 hover:text-primary-600 transition-colors">
+                        <a href="{{ route('cart.index') }}" class="relative p-2 text-gray-700 hover:text-gray-900 transition-colors">
                             <i class="fas fa-shopping-cart text-xl"></i>
-                            <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                            <span id="cart-count" class="absolute -top-1 -right-1 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold" style="background-color: #B83556;">0</span>
                         </a>
 
                         <!-- User Menu -->
                         <div class="relative group">
-                            <button class="flex items-center space-x-2 text-gray-700 hover:text-primary-600 transition-colors">
+                            <button class="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors">
                                 <i class="fas fa-user"></i>
                                 <span class="hidden sm:block">{{ Auth::user()->name }}</span>
                                 <i class="fas fa-chevron-down text-sm"></i>
                             </button>
                             
-                            <div class="absolute right-0 mt-2 w-48 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50" style="background-color: #F9CDD5;">
+                            <div class="absolute right-0 mt-2 w-48 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 border-2" style="background-color: #FFB5C8; border-color: #FF9CBF;">
                                 <div class="py-1">
                                     @if(Auth::user()->isAdmin())
-                                        <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 text-sm text-gray-800 hover:text-white font-medium transition-colors rounded-md mx-1 my-1" 
+                                           onmouseover="this.style.backgroundColor='#B83556'; this.style.color='white';"
+                                           onmouseout="this.style.backgroundColor='transparent'; this.style.color='#1f2937';">
                                             <i class="fas fa-tachometer-alt mr-2"></i>Admin Dashboard
                                         </a>
                                     @endif
-                                    <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                    <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm text-gray-800 hover:text-white font-medium transition-colors rounded-md mx-1 my-1"
+                                       onmouseover="this.style.backgroundColor='#B83556'; this.style.color='white';"
+                                       onmouseout="this.style.backgroundColor='transparent'; this.style.color='#1f2937';">
                                         <i class="fas fa-box mr-2"></i>Pesanan Saya
                                     </a>
-                                    <hr class="my-1">
+                                    <hr class="my-1 border-gray-300">
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                        <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-800 hover:text-white font-medium transition-colors rounded-md mx-1 my-1"
+                                                onmouseover="this.style.backgroundColor='#B83556'; this.style.color='white';"
+                                                onmouseout="this.style.backgroundColor='transparent'; this.style.color='#1f2937';">
                                             <i class="fas fa-sign-out-alt mr-2"></i>Logout
                                         </button>
                                     </form>
@@ -65,10 +71,13 @@
                             </div>
                         </div>
                     @else
-                        <a href="{{ route('login') }}" class="text-gray-600 hover:text-primary-600 transition-colors">
+                        <a href="{{ route('login') }}" class="text-gray-700 hover:text-gray-900 transition-colors font-medium">
                             <i class="fas fa-sign-in-alt mr-1"></i>Login
                         </a>
-                        <a href="{{ route('auth.register') }}" class="bg-[#B83556] text-white px-4 py-2 rounded-lg hover:bg-[#FF9CBF] transition-colors">
+                        <a href="{{ route('auth.register') }}" class="text-white px-4 py-2 rounded-lg transition-colors font-semibold shadow-sm"
+                           style="background-color: #B83556;"
+                           onmouseover="this.style.backgroundColor='#952B47'"
+                           onmouseout="this.style.backgroundColor='#B83556'">
                             Daftar
                         </a>
                     @endauth
@@ -76,7 +85,7 @@
 
                 <!-- Mobile menu button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-primary-600">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-gray-900 transition-colors">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -87,22 +96,32 @@
         <div id="mobile-menu" class="hidden md:hidden border-t" style="background-color: #F9CDD5;">
             <div class="px-4 pt-2 pb-3 space-y-1">
                 @auth
-                    <a href="{{ route('cart.index') }}" class="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                    <a href="{{ route('cart.index') }}" class="block px-3 py-2 text-gray-800 font-medium rounded-md transition-colors"
+                       onmouseover="this.style.backgroundColor='#FFB5C8'"
+                       onmouseout="this.style.backgroundColor='transparent'">
                         <i class="fas fa-shopping-cart mr-2"></i>Keranjang
                     </a>
-                    <a href="{{ route('orders.index') }}" class="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                    <a href="{{ route('orders.index') }}" class="block px-3 py-2 text-gray-800 font-medium rounded-md transition-colors"
+                       onmouseover="this.style.backgroundColor='#FFB5C8'"
+                       onmouseout="this.style.backgroundColor='transparent'">
                         <i class="fas fa-box mr-2"></i>Pesanan Saya
                     </a>
                     @if(Auth::user()->isAdmin())
-                        <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                        <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 text-gray-800 font-medium rounded-md transition-colors"
+                           onmouseover="this.style.backgroundColor='#FFB5C8'"
+                           onmouseout="this.style.backgroundColor='transparent'">
                             <i class="fas fa-tachometer-alt mr-2"></i>Admin Dashboard
                         </a>
                     @endif
                 @else
-                    <a href="{{ route('login') }}" class="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                    <a href="{{ route('login') }}" class="block px-3 py-2 text-gray-800 font-medium rounded-md transition-colors"
+                       onmouseover="this.style.backgroundColor='#FFB5C8'"
+                       onmouseout="this.style.backgroundColor='transparent'">
                         <i class="fas fa-sign-in-alt mr-2"></i>Login
                     </a>
-                    <a href="{{ route('auth.register') }}" class="block px-3 py-2 text-gray-700 hover:bg-gray-100 rounded-md">
+                    <a href="{{ route('auth.register') }}" class="block px-3 py-2 text-gray-800 font-medium rounded-md transition-colors"
+                       onmouseover="this.style.backgroundColor='#FFB5C8'"
+                       onmouseout="this.style.backgroundColor='transparent'">
                         <i class="fas fa-user-plus mr-2"></i>Daftar
                     </a>
                 @endauth
@@ -167,13 +186,19 @@
                     © {{ date('Y') }} UMKM Commerce. All rights reserved.
                 </p>
                 <div class="flex space-x-4 mt-4 md:mt-0">
-                    <a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">
+                    <a href="#" class="text-gray-400 transition-colors text-xl"
+                       onmouseover="this.style.color='#FF9CBF'"
+                       onmouseout="this.style.color='#9ca3af'">
                         <i class="fab fa-facebook"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">
+                    <a href="#" class="text-gray-400 transition-colors text-xl"
+                       onmouseover="this.style.color='#FF9CBF'"
+                       onmouseout="this.style.color='#9ca3af'">
                         <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-primary-400 transition-colors">
+                    <a href="#" class="text-gray-400 transition-colors text-xl"
+                       onmouseover="this.style.color='#FF9CBF'"
+                       onmouseout="this.style.color='#9ca3af'">
                         <i class="fab fa-instagram"></i>
                     </a>
                 </div>
