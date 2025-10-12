@@ -43,20 +43,32 @@ class ProductService
 
         // Sort
         $sortBy = $request->get('sort', 'created_at');
-        $sortOrder = $request->get('order', 'desc');
 
         switch ($sortBy) {
+            case 'price_asc':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_desc':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'name_asc':
+                $query->orderBy('name', 'asc');
+                break;
+            case 'name_desc':
+                $query->orderBy('name', 'desc');
+                break;
             case 'name':
-                $query->orderBy('name', $sortOrder);
+                $query->orderBy('name', 'asc');
                 break;
             case 'price':
-                $query->orderBy('price', $sortOrder);
+                $query->orderBy('price', 'asc');
                 break;
             case 'stock':
-                $query->orderBy('stock', $sortOrder);
+                $query->orderBy('stock', 'desc');
                 break;
+            case 'created_at':
             default:
-                $query->orderBy('created_at', $sortOrder);
+                $query->orderBy('created_at', 'desc');
         }
 
         return $query->paginate(12);

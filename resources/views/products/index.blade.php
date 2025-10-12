@@ -131,9 +131,18 @@
                                 <select id="sort" 
                                         name="sort" 
                                         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white">
-                                    <option value="created_at" {{ request('sort') == 'created_at' ? 'selected' : '' }}>Terbaru</option>
-                                    <option value="name" {{ request('sort') == 'name' ? 'selected' : '' }}>Nama A-Z</option>
-                                    <option value="price" {{ request('sort') == 'price' ? 'selected' : '' }}>Harga</option>
+                                    <option value="">Pilih Urutan</option>
+                                    <optgroup label="Harga">
+                                        <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Harga: Terendah ke Tertinggi</option>
+                                        <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Harga: Tertinggi ke Terendah</option>
+                                    </optgroup>
+                                    <optgroup label="Nama">
+                                        <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>Nama: A - Z</option>
+                                        <option value="name_desc" {{ request('sort') == 'name_desc' ? 'selected' : '' }}>Nama: Z - A</option>
+                                    </optgroup>
+                                    <optgroup label="Lainnya">
+                                        <option value="created_at" {{ request('sort') == 'created_at' ? 'selected' : '' }}>Terbaru</option>
+                                    </optgroup>
                                 </select>
                             </div>
 
