@@ -16,10 +16,18 @@ class OrderController extends Controller
         $this->orderService = $orderService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $orders = $this->orderService->getUserOrders(Auth::user());
-        return view('orders.index', compact('orders'));
+        $query = Auth::user()->orders()->with(['items.product'])->latest();
+        
+        // Filter by status if provided
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+        
+        $orders = $query->paginate(10);
+        
+        return view('orders', compact('orders'));
     }
 
     public function create()
