@@ -36,14 +36,23 @@ class CheckoutController extends Controller
             }
         }
 
-        return view('checkout.index', $cartSummary);
+        return view('checkout', [
+            'items' => $cartSummary['items'],
+            'subtotal' => $cartSummary['total_price'],
+            'total' => $cartSummary['total_price'],
+            'totalItems' => $cartSummary['total_items']
+        ]);
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'shipping_address' => 'required|string|max:500',
+            'recipient_name' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
+            'shipping_address' => 'required|string|max:500',
+            'city' => 'required|string|max:100',
+            'postal_code' => 'required|string|max:10',
+            'payment_method' => 'required|in:bank_transfer,e_wallet,cod',
             'notes' => 'nullable|string|max:500'
         ]);
 
@@ -54,8 +63,11 @@ class CheckoutController extends Controller
             return redirect()->route('cart.index')->with('error', 'Keranjang belanja Anda kosong');
         }
 
+        // Combine address
+        $fullAddress = $request->shipping_address . ', ' . $request->city . ', ' . $request->postal_code;
+
         $orderData = [
-            'address' => $request->shipping_address,
+            'address' => $fullAddress,
             'phone' => $request->phone,
             'notes' => $request->notes
         ];
@@ -67,7 +79,7 @@ class CheckoutController extends Controller
             $this->cartService->clearCart(Auth::user());
             
             return redirect()->route('orders.show', $result['order']->id)
-                            ->with('success', 'Pesanan berhasil dibuat!');
+                            ->with('success', 'Pesanan berhasil dibuat! Silakan lakukan pembayaran.');
         }
 
         return redirect()->back()

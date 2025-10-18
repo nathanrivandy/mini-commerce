@@ -520,9 +520,8 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Store selected items and redirect to checkout
-        sessionStorage.setItem('checkout_items', JSON.stringify(selectedItems));
-        window.location.href = '{{ route("orders.create") }}';
+        // Redirect to checkout page
+        window.location.href = '{{ route("checkout.index") }}';
     });
 
     // Show notification
