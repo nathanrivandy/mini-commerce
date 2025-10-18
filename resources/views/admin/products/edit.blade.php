@@ -26,7 +26,7 @@
         <div class="bg-white shadow-lg rounded-xl border border-gray-100 overflow-hidden">
             <div class="px-8 py-6 bg-gray-50 border-b border-gray-200">
                 <div class="flex items-center">
-                    <div class="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center mr-4 shadow-md">
+                    <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-md">
                         <i class="fas fa-edit text-white text-xl"></i>
                     </div>
                     <div>
@@ -43,13 +43,13 @@
                         <!-- Product Name -->
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
-                                <i class="fas fa-tag mr-2 text-primary-600"></i>Nama Produk
+                                <i class="fas fa-tag mr-2 text-blue-600"></i>Nama Produk
                             </label>
                             <input type="text" 
                                    name="name" 
                                    id="name" 
                                    value="{{ old('name', $product->name) }}"
-                                   class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 @error('name') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
+                                   class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('name') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
                                    placeholder="Masukkan nama produk..."
                                    required>
                             @error('name')
@@ -60,11 +60,11 @@
                         <!-- Category -->
                         <div>
                             <label for="category_id" class="block text-sm font-medium text-gray-700 mb-2">
-                                <i class="fas fa-folder mr-2 text-primary-600"></i>Kategori
+                                <i class="fas fa-folder mr-2 text-blue-600"></i>Kategori
                             </label>
                             <select name="category_id" 
                                     id="category_id" 
-                                    class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 @error('category_id') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
+                                    class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('category_id') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
                                     required>
                                 <option value="">Pilih Kategori</option>
                                 @foreach($categories as $category)
@@ -81,7 +81,7 @@
                         <!-- Price -->
                         <div>
                             <label for="price" class="block text-sm font-medium text-gray-700 mb-2">
-                                <i class="fas fa-money-bill-wave mr-2 text-primary-600"></i>Harga
+                                <i class="fas fa-money-bill-wave mr-2 text-blue-600"></i>Harga
                             </label>
                             <div class="relative">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -91,7 +91,7 @@
                                        name="price" 
                                        id="price" 
                                        value="{{ old('price', $product->price) }}"
-                                       class="block w-full pl-10 rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 @error('price') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
+                                       class="block w-full pl-10 rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('price') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
                                        placeholder="0"
                                        min="0"
                                        step="1000"
@@ -108,13 +108,13 @@
                         <!-- Stock -->
                         <div>
                             <label for="stock" class="block text-sm font-medium text-gray-700 mb-2">
-                                <i class="fas fa-boxes mr-2 text-primary-600"></i>Stok
+                                <i class="fas fa-boxes mr-2 text-blue-600"></i>Stok
                             </label>
                             <input type="number" 
                                    name="stock" 
                                    id="stock" 
                                    value="{{ old('stock', $product->stock) }}"
-                                   class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 @error('stock') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
+                                   class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('stock') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
                                    placeholder="0"
                                    min="0"
                                    required>
@@ -126,11 +126,11 @@
                         <!-- Status -->
                         <div>
                             <label for="is_active" class="block text-sm font-medium text-gray-700 mb-2">
-                                <i class="fas fa-toggle-on mr-2 text-primary-600"></i>Status
+                                <i class="fas fa-toggle-on mr-2 text-blue-600"></i>Status
                             </label>
                             <select name="is_active" 
                                     id="is_active" 
-                                    class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 @error('is_active') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
+                                    class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('is_active') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
                                     required>
                                 <option value="1" {{ old('is_active', $product->is_active) == 1 ? 'selected' : '' }}>Aktif</option>
                                 <option value="0" {{ old('is_active', $product->is_active) == 0 ? 'selected' : '' }}>Nonaktif</option>
@@ -141,9 +141,9 @@
                         </div>
 
                         <!-- Current Product Info -->
-                        <div class="bg-primary-50 rounded-lg p-4 border border-primary-200">
-                            <h4 class="text-sm font-medium text-primary-900 mb-2">Informasi Saat Ini</h4>
-                            <div class="text-sm text-primary-800 space-y-1">
+                        <div class="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                            <h4 class="text-sm font-medium text-blue-900 mb-2">Informasi Saat Ini</h4>
+                            <div class="text-sm text-blue-800 space-y-1">
                                 <p><strong>Slug:</strong> {{ $product->slug }}</p>
                                 <p><strong>Dibuat:</strong> {{ $product->created_at->format('d M Y H:i') }}</p>
                                 <p><strong>Total Terjual:</strong> {{ number_format($product->orderItems->sum('quantity')) }} unit</p>
@@ -155,12 +155,12 @@
                 <!-- Description -->
                 <div class="mt-8">
                     <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
-                        <i class="fas fa-align-left mr-2 text-primary-600"></i>Deskripsi Produk
+                        <i class="fas fa-align-left mr-2 text-blue-600"></i>Deskripsi Produk
                     </label>
                     <textarea name="description" 
                               id="description" 
                               rows="4"
-                              class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 @error('description') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
+                              class="block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 @error('description') border-red-300 focus:border-red-500 focus:ring-red-500 @enderror"
                               placeholder="Masukkan deskripsi produk...">{{ old('description', $product->description) }}</textarea>
                     @error('description')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -173,7 +173,7 @@
         <div class="bg-white shadow-lg rounded-xl border border-gray-100 overflow-hidden">
             <div class="px-8 py-6 bg-gray-50 border-b border-gray-200">
                 <div class="flex items-center">
-                    <div class="w-12 h-12 bg-secondary-500 rounded-xl flex items-center justify-center mr-4 shadow-md">
+                    <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-md">
                         <i class="fas fa-image text-white text-xl"></i>
                     </div>
                     <div>
@@ -199,15 +199,15 @@
                     <!-- Upload New Image -->
                     <div>
                         <label for="image" class="block text-sm font-medium text-gray-700 mb-3">
-                            <i class="fas fa-cloud-upload-alt mr-2 text-secondary-600"></i>Upload Gambar Baru
+                            <i class="fas fa-cloud-upload-alt mr-2 text-blue-600"></i>Upload Gambar Baru
                         </label>
-                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl hover:border-secondary-400 transition-colors">
+                        <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-xl hover:border-blue-400 transition-colors">
                             <div class="space-y-1 text-center">
                                 <div class="mx-auto h-12 w-12 text-gray-400">
                                     <i class="fas fa-cloud-upload-alt text-4xl"></i>
                                 </div>
                                 <div class="flex text-sm text-gray-600">
-                                    <label for="image" class="relative cursor-pointer bg-white rounded-md font-medium text-secondary-600 hover:text-secondary-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-secondary-500">
+                                    <label for="image" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
                                         <span>Upload gambar</span>
                                         <input id="image" name="image" type="file" class="sr-only" accept="image/*" onchange="previewImage(this)">
                                     </label>
@@ -227,7 +227,7 @@
         <!-- Action Buttons -->
         <div class="flex justify-end">
             <button type="submit" 
-                    class="inline-flex items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transform hover:-translate-y-0.5 transition-all">
+                    class="inline-flex items-center px-6 py-3 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transform hover:-translate-y-0.5 transition-all">
                 <i class="fas fa-save mr-2"></i>
                 Update Produk
             </button>

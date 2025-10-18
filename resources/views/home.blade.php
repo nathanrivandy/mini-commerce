@@ -72,10 +72,10 @@
         </p>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+    <div class="flex flex-wrap justify-center gap-6">
         @foreach($categories as $category)
         <a href="{{ route('products.category', $category->slug) }}" 
-           class="group rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1" style="background-color: #FF9CBF;">
+           class="group rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 w-40" style="background-color: #FF9CBF;">
             <div class="p-6 text-center">
                 <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 transition-colors bg-white">
                     @php
