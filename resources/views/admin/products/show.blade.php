@@ -40,7 +40,7 @@
         <div class="bg-white shadow-lg rounded-xl border border-gray-100 overflow-hidden">
             <div class="px-8 py-6 bg-gray-50 border-b border-gray-200">
                 <div class="flex items-center">
-                    <div class="w-12 h-12 bg-primary-500 rounded-xl flex items-center justify-center mr-4 shadow-md">
+                    <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center mr-4 shadow-md">
                         <i class="fas fa-box text-white text-xl"></i>
                     </div>
                     <div>
@@ -62,8 +62,8 @@
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Kategori</label>
                             <div class="flex items-center">
-                                <div class="w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center mr-3">
-                                    <i class="fas fa-tag text-primary-600 text-sm"></i>
+                                <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                                    <i class="fas fa-tag text-blue-600 text-sm"></i>
                                 </div>
                                 <span class="text-base text-gray-900">{{ $product->category->name }}</span>
                             </div>
@@ -71,7 +71,7 @@
 
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Harga</label>
-                            <p class="text-2xl font-bold text-primary-600">{{ 'Rp ' . number_format($product->price, 0, ',', '.') }}</p>
+                            <p class="text-2xl font-bold text-blue-600">{{ 'Rp ' . number_format($product->price, 0, ',', '.') }}</p>
                         </div>
 
                         <div>
@@ -92,7 +92,7 @@
                     <div class="space-y-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Status</label>
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{ $product->is_active ? 'bg-secondary-100 text-secondary-800' : 'bg-danger-100 text-danger-800' }}">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium {{ $product->is_active ? 'bg-emerald-100 text-emerald-800' : 'bg-danger-100 text-danger-800' }}">
                                 <i class="fas {{ $product->is_active ? 'fa-check-circle' : 'fa-times-circle' }} mr-2"></i>
                                 {{ $product->is_active ? 'Aktif' : 'Nonaktif' }}
                             </span>
@@ -111,7 +111,7 @@
                         @if($product->orderItems->count() > 0)
                         <div>
                             <label class="block text-sm font-medium text-gray-500 mb-1">Total Terjual</label>
-                            <p class="text-lg font-semibold text-secondary-600">{{ number_format($product->orderItems->sum('qty')) }} unit</p>
+                            <p class="text-lg font-semibold text-emerald-600">{{ number_format($product->orderItems->sum('qty')) }} unit</p>
                         </div>
                         @endif
                     </div>
@@ -137,7 +137,7 @@
         <div class="p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <div class="w-12 h-12 bg-secondary-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg">
                         <i class="fas fa-shopping-cart text-white text-xl"></i>
                     </div>
                 </div>
@@ -156,7 +156,7 @@
         <div class="p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <div class="w-12 h-12 bg-warning-500 rounded-xl flex items-center justify-center shadow-lg">
+                    <div class="w-12 h-12 bg-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
                         <i class="fas fa-money-bill-wave text-white text-xl"></i>
                     </div>
                 </div>
@@ -186,7 +186,7 @@
         <div class="p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0">
-                    <div class="w-12 h-12 {{ $product->stock <= 10 ? 'bg-danger-500' : ($product->stock <= 50 ? 'bg-warning-500' : 'bg-secondary-500') }} rounded-xl flex items-center justify-center shadow-lg">
+                    <div class="w-12 h-12 {{ $product->stock <= 10 ? 'bg-danger-500' : ($product->stock <= 50 ? 'bg-amber-500' : 'bg-emerald-600') }} rounded-xl flex items-center justify-center shadow-lg">
                         <i class="fas {{ $product->stock <= 10 ? 'fa-exclamation-triangle' : 'fa-box' }} text-white text-xl"></i>
                     </div>
                 </div>
@@ -218,13 +218,13 @@
     <div class="p-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- Edit Product -->
-            <a href="{{ route('admin.products.edit', $product) }}" class="group relative bg-primary-500 p-6 rounded-xl border-2 border-primary-500 hover:bg-primary-600 hover:border-primary-600 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 text-white">
+            <a href="{{ route('admin.products.edit', $product) }}" class="group relative bg-blue-600 p-6 rounded-xl border-2 border-blue-600 hover:bg-blue-700 hover:border-blue-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 text-white">
                 <div class="text-center">
-                    <div class="w-12 h-12 bg-primary-400 bg-opacity-30 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <div class="w-12 h-12 bg-blue-500 bg-opacity-30 rounded-xl flex items-center justify-center mx-auto mb-3">
                         <i class="fas fa-edit text-xl"></i>
                     </div>
                     <h4 class="text-lg font-bold mb-2">Edit Produk</h4>
-                    <p class="text-sm text-primary-100">Ubah informasi produk</p>
+                    <p class="text-sm text-blue-100">Ubah informasi produk</p>
                 </div>
             </a>
 
