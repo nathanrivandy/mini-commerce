@@ -43,7 +43,8 @@
                                    name="search" 
                                    value="{{ request('search') }}"
                                    placeholder="Ketik untuk mencari produk..."
-                                   class="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:border-transparent">
+                                   class="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:border-transparent"
+                                   {{ request('search') ? 'autofocus' : '' }}>
                             <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                             @if(request('search'))
                                 <button type="button" 
@@ -500,32 +501,46 @@
         
         if (searchInput) {
             let searchTimeout;
+            let isTyping = false;
             
-            // Debounced search - tunggu 1.5 detik setelah user berhenti mengetik
+            // Auto-focus dan set cursor ke akhir text jika ada search value
+            if (searchInput.value) {
+                searchInput.focus();
+                // Set cursor ke akhir text
+                const length = searchInput.value.length;
+                searchInput.setSelectionRange(length, length);
+            }
+            
+            // Debounced search - tunggu 0.5 detik setelah user berhenti mengetik
             searchInput.addEventListener('input', function() {
                 clearTimeout(searchTimeout);
+                isTyping = true;
                 
                 const searchValue = this.value.trim();
                 
-                // Jika search kosong, langsung submit
-                if (searchValue === '') {
-                    searchForm.submit();
-                    return;
-                }
-                
-                // Tunggu 1500ms (1.5 detik) setelah user berhenti mengetik
+                // Tunggu 500ms (0.5 detik) setelah user berhenti mengetik
                 searchTimeout = setTimeout(() => {
-                    searchForm.submit();
-                }, 1500);
+                    isTyping = false;
+                    // Hanya submit jika user benar-benar berhenti mengetik
+                    if (!isTyping) {
+                        searchForm.submit();
+                    }
+                }, 500);
             });
             
             // Submit langsung saat user menekan Enter
             searchInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
                     clearTimeout(searchTimeout);
+                    isTyping = false;
                     e.preventDefault();
                     searchForm.submit();
                 }
+            });
+            
+            // Tandai sedang mengetik saat keydown
+            searchInput.addEventListener('keydown', function() {
+                isTyping = true;
             });
         }
         
