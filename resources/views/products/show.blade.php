@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', $product->name . ' - Mini Commerce')
+@section('title', $product->name . ' - Riloka')
 
 @section('content')
 <div class="min-h-screen" style="background-color: #F9CDD5;">
@@ -103,53 +103,55 @@
 
                 <!-- Add to Cart Section -->
                 @auth
-                    @if($product->stock > 0)
-                        <div class="space-y-4">
-                            <!-- Quantity Selector -->
-                            <div>
-                                <label class="block text-white font-semibold mb-2">
-                                    <i class="fas fa-shopping-basket mr-1"></i>Jumlah
-                                </label>
-                                <div class="flex items-center space-x-3">
-                                    <button type="button" 
-                                            id="decrease-qty"
-                                            class="w-12 h-12 rounded-md bg-white text-gray-700 hover:bg-gray-100 transition-colors flex items-center justify-center font-bold text-xl">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <input type="text" 
-                                           id="quantity" 
-                                           value="1" 
-                                           inputmode="numeric"
-                                           pattern="[0-9]*"
-                                           class="w-24 text-center border-2 border-white rounded-md py-2 font-semibold text-xl focus:outline-none focus:ring-2 focus:ring-white bg-white">
-                                    <button type="button" 
-                                            id="increase-qty"
-                                            class="w-12 h-12 rounded-md bg-white text-gray-700 hover:bg-gray-100 transition-colors flex items-center justify-center font-bold text-xl">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                    <span class="text-gray-700 text-sm ml-2 font-medium">Maks: {{ $product->stock }}</span>
+                    @if(!Auth::user()->isAdmin())
+                        @if($product->stock > 0)
+                            <div class="space-y-4">
+                                <!-- Quantity Selector -->
+                                <div>
+                                    <label class="block text-white font-semibold mb-2">
+                                        <i class="fas fa-shopping-basket mr-1"></i>Jumlah
+                                    </label>
+                                    <div class="flex items-center space-x-3">
+                                        <button type="button" 
+                                                id="decrease-qty"
+                                                class="w-12 h-12 rounded-md bg-white text-gray-700 hover:bg-gray-100 transition-colors flex items-center justify-center font-bold text-xl">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <input type="text" 
+                                               id="quantity" 
+                                               value="1" 
+                                               inputmode="numeric"
+                                               pattern="[0-9]*"
+                                               class="w-24 text-center border-2 border-white rounded-md py-2 font-semibold text-xl focus:outline-none focus:ring-2 focus:ring-white bg-white">
+                                        <button type="button" 
+                                                id="increase-qty"
+                                                class="w-12 h-12 rounded-md bg-white text-gray-700 hover:bg-gray-100 transition-colors flex items-center justify-center font-bold text-xl">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                        <span class="text-gray-700 text-sm ml-2 font-medium">Maks: {{ $product->stock }}</span>
+                                    </div>
+                                </div>
+
+                                <!-- Add to Cart Button -->
+                                <button type="button" 
+                                        id="add-to-cart-btn"
+                                        data-product-id="{{ $product->id }}"
+                                        data-max-stock="{{ $product->stock }}"
+                                        class="w-full text-white px-6 py-4 rounded-lg font-bold text-lg transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
+                                        style="background-color: #B83556;"
+                                        onmouseover="this.style.backgroundColor='#952B47'"
+                                        onmouseout="this.style.backgroundColor='#B83556'">
+                                    <i class="fas fa-cart-plus mr-2"></i>Tambah ke Keranjang
+                                </button>
+                            </div>
+                        @else
+                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
+                                <div class="flex items-center">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                                    <span class="font-semibold">Maaf, produk ini sedang habis.</span>
                                 </div>
                             </div>
-
-                            <!-- Add to Cart Button -->
-                            <button type="button" 
-                                    id="add-to-cart-btn"
-                                    data-product-id="{{ $product->id }}"
-                                    data-max-stock="{{ $product->stock }}"
-                                    class="w-full text-white px-6 py-4 rounded-lg font-bold text-lg transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
-                                    style="background-color: #B83556;"
-                                    onmouseover="this.style.backgroundColor='#952B47'"
-                                    onmouseout="this.style.backgroundColor='#B83556'">
-                                <i class="fas fa-cart-plus mr-2"></i>Tambah ke Keranjang
-                            </button>
-                        </div>
-                    @else
-                        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-                            <div class="flex items-center">
-                                <i class="fas fa-exclamation-triangle mr-2"></i>
-                                <span class="font-semibold">Maaf, produk ini sedang habis.</span>
-                            </div>
-                        </div>
+                        @endif
                     @endif
                 @else
                     <div class="space-y-4">

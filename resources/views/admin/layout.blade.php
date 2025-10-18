@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin Dashboard - Mini Commerce')</title>
+    <title>@yield('title', 'Admin Dashboard - Riloka')</title>
     
     <!-- Compiled CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -23,7 +23,7 @@
                 <div class="flex h-16 shrink-0 items-center">
                     <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-1">
                         <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-12 h-auto">
-                        <img src="{{ asset('images/logo-text.png') }}" alt="Mini Commerce" class="h-20 w-auto -ml-8">
+                        <img src="{{ asset('images/logo-text.png') }}" alt="Riloka" class="h-20 w-auto -ml-8">
                     </a>
                 </div>
                 
@@ -170,7 +170,7 @@
                     <div class="flex items-center">
                         <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-1">
                             <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-10 h-auto">
-                            <img src="{{ asset('images/logo-text.png') }}" alt="Mini Commerce" class="h-16 w-auto -ml-6">
+                            <img src="{{ asset('images/logo-text.png') }}" alt="Riloka" class="h-16 w-auto -ml-6">
                         </a>
                     </div>
                 </div>
@@ -199,7 +199,7 @@
                             <div class="flex h-16 shrink-0 items-center">
                                 <a href="{{ route('admin.dashboard') }}" class="flex items-center space-x-1">
                                     <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-10 h-auto">
-                                    <img src="{{ asset('images/logo-text.png') }}" alt="Mini Commerce" class="h-16 w-auto -ml-6">
+                                    <img src="{{ asset('images/logo-text.png') }}" alt="Riloka" class="h-16 w-auto -ml-6">
                                 </a>
                             </div>
                             

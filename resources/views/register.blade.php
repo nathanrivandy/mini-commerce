@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Daftar - Mini Commerce')
+@section('title', 'Daftar - Riloka')
 
 @section('content')
 <div class="min-h-screen bg-[#F9CDD5] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -50,7 +50,7 @@
                 Bergabung dengan Kami
             </h2>
             <p class="text-gray-600">
-                Buat akun baru di Mini Commerce untuk mulai berbelanja
+                Buat akun baru di Riloka untuk mulai berbelanja
             </p>
         </div>
 

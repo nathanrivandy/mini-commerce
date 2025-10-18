@@ -14,11 +14,6 @@
 
 @section('page-actions')
 <div class="flex items-center space-x-3">
-    <button type="button" onclick="goBack()" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-        <i class="fas fa-arrow-left -ml-0.5 mr-1.5 h-4 w-4"></i>
-        Kembali
-    </button>
-    
     <!-- Status Update -->
     <div class="flex items-center">
         <label for="status-select" class="text-sm font-medium text-gray-700 mr-2">Status:</label>
@@ -40,9 +35,9 @@
         </select>
     </div>
     
-    <button type="button" id="print-btn" class="inline-flex items-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500">
-        <i class="fas fa-print -ml-0.5 mr-1.5 h-4 w-4"></i>
-        Print
+    <button type="button" onclick="goBack()" class="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+        <i class="fas fa-arrow-left -ml-0.5 mr-1.5 h-4 w-4"></i>
+        Kembali
     </button>
 </div>
 @endsection
@@ -304,11 +299,6 @@
                         <i class="fas fa-times mr-2"></i>Batalkan Pesanan
                     </button>
                     @endif
-                    
-                    <button type="button" onclick="window.print()"
-                            class="w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        <i class="fas fa-print mr-2"></i>Cetak Invoice
-                    </button>
                 </div>
             </div>
         </div>

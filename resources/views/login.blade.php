@@ -1,6 +1,6 @@
     @extends('app')
 
-    @section('title', 'Masuk - Mini Commerce')
+    @section('title', 'Masuk - Riloka')
 
     @section('content')
         <div class="min-h-screen bg-[#F9CDD5] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -50,7 +50,7 @@
                     Selamat Datang Kembali
                 </h2>
                 <p class="text-gray-600">
-                    Masuk ke akun Mini Commerce Anda
+                    Masuk ke akun Riloka Anda
                 </p>
             </div>
 

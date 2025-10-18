@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Keranjang Belanja - Mini Commerce')
+@section('title', 'Keranjang Belanja - Riloka')
 
 @section('content')
 <div class="min-h-screen py-8 relative overflow-hidden" style="background-color: #F9CDD5;">
@@ -100,25 +100,28 @@
 
                                     <!-- Quantity Controls -->
                                     <div class="flex items-center space-x-3">
-                                        <div class="flex items-center border rounded-lg overflow-hidden">
-                                            <button class="qty-decrease px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
+                                        <div class="flex items-center space-x-2">
+                                            <button type="button"
+                                                    class="qty-decrease w-8 h-8 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors flex items-center justify-center font-bold"
                                                     data-product-id="{{ $item->product->id }}">
-                                                <i class="fas fa-minus text-sm"></i>
+                                                <i class="fas fa-minus text-xs"></i>
                                             </button>
-                                            <input type="number" 
-                                                   class="qty-input w-16 text-center border-x py-1 focus:outline-none"
+                                            <input type="text" 
+                                                   class="qty-input w-16 text-center border-2 border-gray-300 rounded-md py-1.5 font-semibold text-base focus:outline-none focus:ring-2 focus:ring-pink-500 bg-white"
                                                    value="{{ $item->qty }}"
-                                                   min="1"
-                                                   max="{{ $item->product->stock }}"
+                                                   inputmode="numeric"
+                                                   pattern="[0-9]*"
                                                    data-product-id="{{ $item->product->id }}"
+                                                   data-max="{{ $item->product->stock }}"
                                                    readonly>
-                                            <button class="qty-increase px-3 py-1 bg-gray-100 hover:bg-gray-200 transition-colors"
+                                            <button type="button"
+                                                    class="qty-increase w-8 h-8 rounded-md bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors flex items-center justify-center font-bold"
                                                     data-product-id="{{ $item->product->id }}">
-                                                <i class="fas fa-plus text-sm"></i>
+                                                <i class="fas fa-plus text-xs"></i>
                                             </button>
                                         </div>
-                                        <span class="text-sm text-gray-500">
-                                            Stok: {{ $item->product->stock }}
+                                        <span class="text-sm text-gray-500 font-medium">
+                                            Maks: {{ $item->product->stock }}
                                         </span>
                                     </div>
 
@@ -210,9 +213,71 @@
 </div>
 @endsection
 
+@push('styles')
+<style>
+    /* Remove spinner from number input */
+    input[type="text"].qty-input::-webkit-outer-spin-button,
+    input[type="text"].qty-input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    
+    input[type="text"].qty-input {
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+</style>
+@endpush
+
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Validate quantity input - allow only numbers (similar to products.show)
+    document.querySelectorAll('.qty-input').forEach(input => {
+        input.addEventListener('input', function(e) {
+            const maxStock = parseInt(this.getAttribute('data-max'));
+            
+            // Remove any non-numeric characters
+            let value = this.value.replace(/[^0-9]/g, '');
+            
+            // If empty or invalid, set to empty string temporarily
+            if (value === '') {
+                this.value = '';
+                return;
+            }
+            
+            // Parse and validate
+            let numValue = parseInt(value);
+            
+            if (numValue < 1) {
+                this.value = '1';
+            } else if (numValue > maxStock) {
+                this.value = maxStock.toString();
+                showNotification('Jumlah tidak boleh melebihi stok tersedia', 'error');
+            } else {
+                this.value = numValue.toString();
+            }
+        });
+        
+        // On blur, ensure there's always a valid value
+        input.addEventListener('blur', function() {
+            if (this.value === '' || parseInt(this.value) < 1) {
+                this.value = '1';
+            }
+            
+            // Update quantity via API when input loses focus
+            const productId = this.getAttribute('data-product-id');
+            const newQty = parseInt(this.value);
+            const cartItem = this.closest('.cart-item');
+            const currentQtyInDOM = parseInt(cartItem.querySelector('.qty-input').value);
+            
+            // Only update if value changed
+            if (newQty !== currentQtyInDOM) {
+                updateQuantity(productId, newQty);
+            }
+        });
+    });
+
     // Custom Confirm Dialog with Pink Theme
     function showCustomConfirm(message, onConfirm) {
         // Create overlay

@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Beranda - Mini Commerce')
+@section('title', 'Beranda - Riloka')
 
 @section('content')
 <!-- Hero Section -->
@@ -124,76 +124,65 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             @foreach($featuredProducts as $product)
-            <div class="rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 group" style="background-color: #FF9CBF;">
-                <div class="relative overflow-hidden rounded-t-xl">
-                    <img src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/400x300?text=No+Image' }}" 
-                         alt="{{ $product->name }}" 
-                         class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
-                    
-                    @if($product->stock <= 10 && $product->stock > 0)
-                        <div class="absolute top-2 left-2 text-white px-2 py-1 rounded-full text-xs font-semibold" style="background-color: #F9C74F;">
-                            Stok Terbatas
+            <a href="{{ route('products.show', $product->slug) }}" 
+               class="rounded-lg shadow-sm hover:shadow-lg transition-all duration-200 overflow-hidden group block cursor-pointer transform hover:-translate-y-1" 
+               style="background-color: #FF9CBF;">
+                <!-- Product Image -->
+                <div class="relative overflow-hidden">
+                    @if($product->image)
+                        <img src="{{ asset('storage/' . $product->image) }}" 
+                             alt="{{ $product->name }}" 
+                             class="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300">
+                    @else
+                        <div class="w-full h-48 flex items-center justify-center bg-gray-100">
+                            <i class="fas fa-image text-gray-400 text-4xl"></i>
                         </div>
-                    @elseif($product->stock == 0)
-                        <div class="absolute top-2 left-2 bg-danger-500 text-white px-2 py-1 rounded-full text-xs font-semibold">
-                            Habis
+                    @endif
+                    
+                    <!-- Stock Badge Overlay -->
+                    @if($product->stock <= 0)
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <span class="bg-red-600 text-white px-4 py-2 rounded-full font-semibold">
+                                <i class="fas fa-times-circle mr-1"></i>Stok Habis
+                            </span>
                         </div>
                     @endif
                 </div>
 
-                <div class="p-6">
+                <!-- Product Info -->
+                <div class="p-4">
+                    <!-- Category Badge -->
                     <div class="mb-2">
-                        <span class="text-xs text-white font-semibold px-2 py-1 rounded-full" style="background-color: #B83556;">
+                        <span class="inline-block text-white text-xs px-2 py-1 rounded-full" style="background-color: #B83556;">
                             {{ $product->category->name }}
                         </span>
                     </div>
-                    
-                    <h3 class="font-semibold text-white mb-2 group-hover:text-gray-900 transition-colors">
-                        <a href="{{ route('products.show', $product->slug) }}">
-                            {{ $product->name }}
-                        </a>
+
+                    <!-- Product Name -->
+                    <h3 class="text-lg font-semibold text-white mb-2 group-hover:text-gray-900 transition-colors">
+                        {{ $product->name }}
                     </h3>
-                    
-                    <p class="text-gray-600 text-sm mb-3 line-clamp-2">
+
+                    <!-- Product Description -->
+                    <p class="text-gray-700 text-sm mb-3 line-clamp-2">
                         {{ Str::limit($product->description, 80) }}
                     </p>
-                    
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-lg font-bold text-gray-900">
-                            {{ $product->formatted_price }}
-                        </span>
-                        <span class="text-sm text-gray-500">
-                            Stok: {{ $product->stock }}
-                        </span>
-                    </div>
 
-                    <div class="flex gap-2">
-                        <a href="{{ route('products.show', $product->slug) }}" 
-                           class="flex-1 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg text-center hover:bg-gray-200 transition-colors">
-                            Lihat Detail
-                        </a>
-                        
-                        @auth
-                            @if($product->stock > 0)
-                                <button data-product-id="{{ $product->id }}" 
-                                        class="add-to-cart-btn text-white px-4 py-2 rounded-lg transition-colors" style="background-color: #B83556;">
-                                    <i class="fas fa-cart-plus"></i>
-                                </button>
-                            @else
-                                <button disabled 
-                                        class="bg-gray-300 text-gray-500 px-4 py-2 rounded-lg cursor-not-allowed">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            @endif
-                        @else
-                            <a href="{{ route('login') }}" 
-                               class="text-white px-4 py-2 rounded-lg transition-colors" style="background-color: #B83556;">
-                                <i class="fas fa-cart-plus"></i>
-                            </a>
-                        @endauth
+                    <!-- Price and Stock -->
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-xl font-bold text-gray-900">{{ $product->formatted_price }}</span>
+                        </div>
+                        @if($product->stock > 0)
+                            <div class="text-right">
+                                <span class="text-sm text-green-600 font-medium">
+                                    <i class="fas fa-check-circle mr-1"></i>Stok: {{ $product->stock }}
+                                </span>
+                            </div>
+                        @endif
                     </div>
                 </div>
-            </div>
+            </a>
             @endforeach
         </div>
 

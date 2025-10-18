@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Produk - Mini Commerce')
+@section('title', 'Produk - Riloka')
 
 @section('content')
 <div class="min-h-screen" style="background-color: #F9CDD5;">

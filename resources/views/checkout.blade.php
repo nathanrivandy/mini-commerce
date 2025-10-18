@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Checkout - Mini Commerce')
+@section('title', 'Checkout - Riloka')
 
 @section('content')
 <div class="min-h-screen py-8 relative overflow-hidden" style="background-color: #F9CDD5;">

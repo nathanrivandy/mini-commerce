@@ -70,7 +70,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/')->with('success', 'Registrasi berhasil! Selamat datang di Mini Commerce, ' . $user->name . '!');
+        return redirect('/')->with('success', 'Registrasi berhasil! Selamat datang di Riloka, ' . $user->name . '!');
     }
 
     public function logout(Request $request)

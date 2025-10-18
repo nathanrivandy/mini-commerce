@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Pesanan Saya - Mini Commerce')
+@section('title', 'Pesanan Saya - Riloka')
 
 @section('content')
 <div class="min-h-screen" style="background-color: #F9CDD5;">
@@ -33,31 +33,36 @@
         <div class="bg-white rounded-lg shadow-sm mb-6 overflow-hidden">
             <div class="flex flex-wrap border-b">
                 <a href="{{ route('orders.index') }}" 
-                   class="px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ !request('status') ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
-                   style="{{ !request('status') ? 'background-color: #B83556;' : '' }}">
+                   class="status-tab px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ !request('status') ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
+                   data-active="{{ !request('status') ? 'true' : 'false' }}"
+                   data-color="#B83556">
                     <i class="fas fa-list mr-2"></i>Semua
                     <span class="ml-2 px-2 py-1 rounded-full text-xs {{ !request('status') ? 'bg-white text-pink-600' : 'bg-gray-200' }}">
                         {{ $orders->total() }}
                     </span>
                 </a>
                 <a href="{{ route('orders.index', ['status' => 'processing']) }}" 
-                   class="px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ request('status') == 'processing' ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
-                   style="{{ request('status') == 'processing' ? 'background-color: #7A8450;' : '' }}">
+                   class="status-tab px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ request('status') == 'processing' ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
+                   data-active="{{ request('status') == 'processing' ? 'true' : 'false' }}"
+                   data-color="#7A8450">
                     <i class="fas fa-box mr-2"></i>Diproses
                 </a>
                 <a href="{{ route('orders.index', ['status' => 'shipped']) }}" 
-                   class="px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ request('status') == 'shipped' ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
-                   style="{{ request('status') == 'shipped' ? 'background-color: #FF9CBF;' : '' }}">
+                   class="status-tab px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ request('status') == 'shipped' ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
+                   data-active="{{ request('status') == 'shipped' ? 'true' : 'false' }}"
+                   data-color="#FF9CBF">
                     <i class="fas fa-truck mr-2"></i>Dikirim
                 </a>
                 <a href="{{ route('orders.index', ['status' => 'delivered']) }}" 
-                   class="px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ request('status') == 'delivered' ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
-                   style="{{ request('status') == 'delivered' ? 'background-color: #10B981;' : '' }}">
+                   class="status-tab px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ request('status') == 'delivered' ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
+                   data-active="{{ request('status') == 'delivered' ? 'true' : 'false' }}"
+                   data-color="#10B981">
                     <i class="fas fa-check-circle mr-2"></i>Selesai
                 </a>
                 <a href="{{ route('orders.index', ['status' => 'cancelled']) }}" 
-                   class="px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ request('status') == 'cancelled' ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
-                   style="{{ request('status') == 'cancelled' ? 'background-color: #EF4444;' : '' }}">
+                   class="status-tab px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ request('status') == 'cancelled' ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
+                   data-active="{{ request('status') == 'cancelled' ? 'true' : 'false' }}"
+                   data-color="#EF4444">
                     <i class="fas fa-times-circle mr-2"></i>Dibatalkan
                 </a>
             </div>
@@ -131,8 +136,8 @@
                             ];
                             $config = $statusConfig[$order->status] ?? ['color' => '#6B7280', 'icon' => 'fa-question', 'label' => 'Unknown'];
                         @endphp
-                        <span class="px-4 py-2 rounded-full text-white font-medium text-sm" 
-                              style="background-color: {{ $config['color'] }};">
+                        <span class="px-4 py-2 rounded-full text-white font-medium text-sm status-badge"
+                              data-color="{{ $config['color'] }}">
                             <i class="fas {{ $config['icon'] }} mr-2"></i>{{ $config['label'] }}
                         </span>
                         @if($order->status === 'processing' && in_array($order->payment_method, ['bank_transfer', 'e_wallet']))
@@ -200,7 +205,8 @@
                             @method('PATCH')
                         </form>
                         <button type="button" 
-                                onclick="cancelOrder({{ $order->id }})"
+                                data-order-id="{{ $order->id }}"
+                                onclick="cancelOrder(this.getAttribute('data-order-id'))"
                                 class="px-4 py-2 rounded-lg font-medium text-white transition-all hover:opacity-90"
                                 style="background-color: #EF4444;">
                             <i class="fas fa-times mr-2"></i>Batalkan
@@ -304,8 +310,8 @@
                                                     $processingLabel = 'Menunggu Konfirmasi Pembayaran';
                                                 }
                                             @endphp
-                                            <div class="absolute left-0 w-8 h-8 rounded-full flex items-center justify-center text-white"
-                                                 style="background-color: {{ $processingBgColor }};">
+                                            <div class="absolute left-0 w-8 h-8 rounded-full flex items-center justify-center text-white timeline-badge"
+                                                 data-color="{{ $processingBgColor }}">
                                                 <i class="fas {{ $order->payment_method === 'cod' ? 'fa-box' : 'fa-clock' }} text-sm"></i>
                                             </div>
                                             <div>
@@ -372,9 +378,30 @@
         </div>
 
         <!-- Pagination -->
-        <div class="mt-8">
-            {{ $orders->links() }}
+        @if($orders->hasPages())
+        <div class="mt-8 rounded-lg shadow-sm p-6" style="background-color: #FF9CBF;">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <p class="text-sm font-medium text-white">
+                        Menampilkan <span class="font-bold">{{ $orders->firstItem() }}</span> sampai <span class="font-bold">{{ $orders->lastItem() }}</span> dari <span class="font-bold">{{ $orders->total() }}</span> pesanan
+                    </p>
+                </div>
+                <div class="flex space-x-1">
+                    @foreach ($orders->getUrlRange(1, $orders->lastPage()) as $page => $url)
+                        @if ($page == $orders->currentPage())
+                            <span class="px-4 py-2 text-sm font-bold text-white rounded-lg shadow-md" style="background-color: #B83556;">
+                                {{ $page }}
+                            </span>
+                        @else
+                            <a href="{{ $url }}" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white rounded-lg hover:bg-gray-100 transition-colors shadow-sm">
+                                {{ $page }}
+                            </a>
+                        @endif
+                    @endforeach
+                </div>
+            </div>
         </div>
+        @endif
         @else
         <!-- Empty State -->
         <div class="bg-white rounded-xl shadow-md p-12 text-center">
@@ -409,6 +436,26 @@
 
 @push('scripts')
 <script>
+// Apply background colors from data attributes
+document.addEventListener('DOMContentLoaded', function() {
+    // Status tabs
+    document.querySelectorAll('.status-tab').forEach(tab => {
+        if (tab.getAttribute('data-active') === 'true') {
+            tab.style.backgroundColor = tab.getAttribute('data-color');
+        }
+    });
+    
+    // Status badges
+    document.querySelectorAll('.status-badge').forEach(badge => {
+        badge.style.backgroundColor = badge.getAttribute('data-color');
+    });
+    
+    // Timeline badges
+    document.querySelectorAll('.timeline-badge').forEach(badge => {
+        badge.style.backgroundColor = badge.getAttribute('data-color');
+    });
+});
+
 // Custom Confirm Dialog with Pink Theme
 function showCustomConfirm(message, onConfirm) {
     // Create overlay

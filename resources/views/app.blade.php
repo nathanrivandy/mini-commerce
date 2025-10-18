@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Mini Commerce')</title>
+    <title>@yield('title', 'Riloka')</title>
     
     <!-- Compiled CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -23,18 +23,20 @@
                 <div class="flex items-center pl-2">
                     <a href="{{ url('/') }}" class="flex items-center space-x-1">
                         <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-12 h-auto ml-4">
-                       <img src="{{ asset('images/logo-text.png') }}" alt="Mini Commerce" class="h-20 w-auto -ml-8">
+                       <img src="{{ asset('images/logo-text.png') }}" alt="Riloka" class="h-20 w-auto -ml-8">
                     </a>
                 </div>
 
                 <!-- Right Menu -->
                 <div class="flex items-center space-x-4">
                     @auth
-                        <!-- Cart -->
+                        <!-- Cart - Hidden for Admin -->
+                        @if(!Auth::user()->isAdmin())
                         <a href="{{ route('cart.index') }}" class="relative p-2 text-gray-700 hover:text-gray-900 transition-colors">
                             <i class="fas fa-shopping-cart text-xl"></i>
                             <span id="cart-count" class="absolute -top-1 -right-1 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold" style="background-color: #B83556;">0</span>
                         </a>
+                        @endif
 
                         <!-- User Menu -->
                         <div class="relative group">
@@ -52,12 +54,13 @@
                                            onmouseout="this.style.backgroundColor='transparent'; this.style.color='#1f2937';">
                                             <i class="fas fa-tachometer-alt mr-2"></i>Admin Dashboard
                                         </a>
+                                    @else
+                                        <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm text-gray-800 hover:text-white font-medium transition-colors rounded-md mx-1 my-1"
+                                           onmouseover="this.style.backgroundColor='#B83556'; this.style.color='white';"
+                                           onmouseout="this.style.backgroundColor='transparent'; this.style.color='#1f2937';">
+                                            <i class="fas fa-box mr-2"></i>Pesanan Saya
+                                        </a>
                                     @endif
-                                    <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm text-gray-800 hover:text-white font-medium transition-colors rounded-md mx-1 my-1"
-                                       onmouseover="this.style.backgroundColor='#B83556'; this.style.color='white';"
-                                       onmouseout="this.style.backgroundColor='transparent'; this.style.color='#1f2937';">
-                                        <i class="fas fa-box mr-2"></i>Pesanan Saya
-                                    </a>
                                     <hr class="my-1 border-gray-300">
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
@@ -96,21 +99,22 @@
         <div id="mobile-menu" class="hidden md:hidden border-t" style="background-color: #F9CDD5;">
             <div class="px-4 pt-2 pb-3 space-y-1">
                 @auth
-                    <a href="{{ route('cart.index') }}" class="block px-3 py-2 text-gray-800 font-medium rounded-md transition-colors"
-                       onmouseover="this.style.backgroundColor='#FFB5C8'"
-                       onmouseout="this.style.backgroundColor='transparent'">
-                        <i class="fas fa-shopping-cart mr-2"></i>Keranjang
-                    </a>
-                    <a href="{{ route('orders.index') }}" class="block px-3 py-2 text-gray-800 font-medium rounded-md transition-colors"
-                       onmouseover="this.style.backgroundColor='#FFB5C8'"
-                       onmouseout="this.style.backgroundColor='transparent'">
-                        <i class="fas fa-box mr-2"></i>Pesanan Saya
-                    </a>
                     @if(Auth::user()->isAdmin())
                         <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 text-gray-800 font-medium rounded-md transition-colors"
                            onmouseover="this.style.backgroundColor='#FFB5C8'"
                            onmouseout="this.style.backgroundColor='transparent'">
                             <i class="fas fa-tachometer-alt mr-2"></i>Admin Dashboard
+                        </a>
+                    @else
+                        <a href="{{ route('cart.index') }}" class="block px-3 py-2 text-gray-800 font-medium rounded-md transition-colors"
+                           onmouseover="this.style.backgroundColor='#FFB5C8'"
+                           onmouseout="this.style.backgroundColor='transparent'">
+                            <i class="fas fa-shopping-cart mr-2"></i>Keranjang
+                        </a>
+                        <a href="{{ route('orders.index') }}" class="block px-3 py-2 text-gray-800 font-medium rounded-md transition-colors"
+                           onmouseover="this.style.backgroundColor='#FFB5C8'"
+                           onmouseout="this.style.backgroundColor='transparent'">
+                            <i class="fas fa-box mr-2"></i>Pesanan Saya
                         </a>
                     @endif
                 @else
@@ -161,7 +165,7 @@
                 <div class="col-span-1 md:col-span-2">
                     <div class="flex items-center space-x-1 mb-4">
                         <img src="{{ asset('images/logo.png') }}" alt="Logo" class="w-12 h-auto ml-2">
-                        <img src="{{ asset('images/logo-text.png') }}" alt="Mini Commerce" class="h-20 w-auto -ml-8">
+                        <img src="{{ asset('images/logo-text.png') }}" alt="Riloka" class="h-20 w-auto -ml-8">
                     </div>
                     <p class="text-gray-300 mb-4">
                         Platform e-commerce yang mendukung produk UMKM lokal Indonesia. 
@@ -173,7 +177,7 @@
                 <div class="ml-0 md:ml-8">
                     <h3 class="text-lg font-semibold mb-4">Kontak</h3>
                     <ul class="space-y-2 text-gray-300">
-                        <li><i class="fas fa-envelope mr-2"></i>info@umkmcommerce.com</li>
+                        <li><i class="fas fa-envelope mr-2"></i>info@riloka.com</li>
                         <li><i class="fas fa-phone mr-2"></i>+62 123 456 7890</li>
                         <li><i class="fas fa-map-marker-alt mr-2"></i>Jakarta, Indonesia</li>
                     </ul>
@@ -224,19 +228,24 @@
     </script>
     
     @auth
+    @if(!Auth::user()->isAdmin())
     <script>
         // Update cart count
         function updateCartCount() {
             fetch('/api/cart/count')
                 .then(response => response.json())
                 .then(data => {
-                    document.getElementById('cart-count').textContent = data.count;
+                    const cartCountElement = document.getElementById('cart-count');
+                    if (cartCountElement) {
+                        cartCountElement.textContent = data.count;
+                    }
                 });
         }
         
         // Update cart count on page load
         updateCartCount();
     </script>
+    @endif
     @endauth
     
     @stack('scripts')

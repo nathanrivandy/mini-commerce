@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
         // Create Admin User
         User::firstOrCreate(
-            ['email' => 'admin@minicommerce.com'],
+            ['email' => 'admin@riloka.com'],
             [
                 'name' => 'Administrator',
                 'password' => Hash::make('password'),

@@ -43,7 +43,7 @@ class FreshSeed extends Command
         $this->newLine();
         
         $this->line('👑 Admin Credentials:');
-        $this->line('   Email: admin@minicommerce.com');
+        $this->line('   Email: admin@riloka.com');
         $this->line('   Password: password');
         $this->newLine();
         
@@ -52,7 +52,7 @@ class FreshSeed extends Command
         $this->line('   Password: password');
         $this->newLine();
         
-        $this->line('🎉 Your Mini Commerce application is ready to use!');
+        $this->line('🎉 Your Riloka application is ready to use!');
         
         return 0;
     }

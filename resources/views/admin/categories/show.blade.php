@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('title', 'Detail Kategori - Mini Commerce')
+@section('title', 'Detail Kategori - Riloka')
 @section('page-title', 'Detail Kategori')
 
 @section('page-description')
@@ -9,13 +9,13 @@
 
 @section('page-actions')
 <div class="flex flex-col sm:flex-row gap-3">
-    <a href="{{ route('admin.categories.index') }}" class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-semibold text-gray-700 shadow-lg ring-1 ring-gray-200 hover:bg-gray-50 hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
-        <i class="fas fa-arrow-left -ml-0.5 mr-2 h-4 w-4"></i>
-        Kembali
-    </a>
     <a href="{{ route('admin.categories.edit', $category) }}" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 text-sm font-semibold text-white shadow-lg hover:bg-blue-700 hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
         <i class="fas fa-edit -ml-0.5 mr-2 h-4 w-4"></i>
         Edit Kategori
+    </a>
+    <a href="{{ route('admin.categories.index') }}" class="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-semibold text-gray-700 shadow-lg ring-1 ring-gray-200 hover:bg-gray-50 hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+        <i class="fas fa-arrow-left -ml-0.5 mr-2 h-4 w-4"></i>
+        Kembali
     </a>
 </div>
 @endsection

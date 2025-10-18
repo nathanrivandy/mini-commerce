@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         $this->command->info('Database seeded successfully!');
         $this->command->info('Admin credentials:');
-        $this->command->info('Email: admin@minicommerce.com');
+        $this->command->info('Email: admin@riloka.com');
         $this->command->info('Password: password');
         $this->command->info('');
         $this->command->info('Test user credentials:');

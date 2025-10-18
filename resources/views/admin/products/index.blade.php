@@ -1,6 +1,6 @@
 @extends('admin.layout')
 
-@section('title', 'Kelola Produk - Mini Commerce')
+@section('title', 'Kelola Produk - Riloka')
 @section('page-title', 'Kelola Produk')
 
 @section('page-description')
