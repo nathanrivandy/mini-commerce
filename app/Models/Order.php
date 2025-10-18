@@ -14,6 +14,7 @@ class Order extends Model
         'user_id',
         'total',
         'status',
+        'payment_method',
         'address_text',
         'phone',
         'notes',

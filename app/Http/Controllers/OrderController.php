@@ -50,7 +50,9 @@ class OrderController extends Controller
             abort(404, 'Pesanan tidak ditemukan');
         }
 
-        return view('orders.show', compact('order'));
+        // Redirect to orders index with success message
+        return redirect()->route('orders.index')
+                        ->with('success', 'Pesanan berhasil dibuat! Nomor pesanan: ' . $order->order_number);
     }
 
     public function cancel($id)

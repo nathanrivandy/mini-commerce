@@ -40,11 +40,16 @@ class OrderService
                 }
             }
 
+            // All orders go to processing status
+            // Admin will manage the status from dashboard
+            $orderStatus = Order::STATUS_PROCESSING;
+
             // Create order
             $order = Order::create([
                 'user_id' => $user->id,
                 'total' => $cart->total_price,
-                'status' => Order::STATUS_PENDING,
+                'status' => $orderStatus,
+                'payment_method' => $data['payment_method'] ?? 'cod',
                 'address_text' => $data['address'],
                 'phone' => $data['phone'],
                 'notes' => $data['notes'] ?? null,

@@ -40,15 +40,10 @@
                         {{ $orders->total() }}
                     </span>
                 </a>
-                <a href="{{ route('orders.index', ['status' => 'pending']) }}" 
-                   class="px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ request('status') == 'pending' ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
-                   style="{{ request('status') == 'pending' ? 'background-color: #F9C74F;' : '' }}">
-                    <i class="fas fa-clock mr-2"></i>Belum Dibayar
-                </a>
                 <a href="{{ route('orders.index', ['status' => 'processing']) }}" 
                    class="px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ request('status') == 'processing' ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
                    style="{{ request('status') == 'processing' ? 'background-color: #7A8450;' : '' }}">
-                    <i class="fas fa-box mr-2"></i>Dikemas
+                    <i class="fas fa-box mr-2"></i>Diproses
                 </a>
                 <a href="{{ route('orders.index', ['status' => 'shipped']) }}" 
                    class="px-6 py-4 text-center flex-1 min-w-[120px] font-medium transition-all {{ request('status') == 'shipped' ? 'text-white' : 'text-gray-600 hover:bg-gray-50' }}"
@@ -101,12 +96,35 @@
                                 {{ $order->created_at->format('d M Y') }}
                             </p>
                         </div>
+                        <div>
+                            <p class="text-xs text-gray-500 mb-1">Metode Pembayaran</p>
+                            <p class="text-sm font-medium text-gray-700">
+                                @if($order->payment_method === 'cod')
+                                    <i class="fas fa-money-bill-wave mr-1"></i>COD (Bayar di Tempat)
+                                @elseif($order->payment_method === 'bank_transfer')
+                                    <i class="fas fa-university mr-1"></i>Transfer Bank
+                                @elseif($order->payment_method === 'e_wallet')
+                                    <i class="fas fa-wallet mr-1"></i>E-Wallet
+                                @endif
+                            </p>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-4">
+                    <div class="flex flex-col items-end gap-2">
                         @php
+                            // Determine label for processing status based on payment method
+                            $processingLabel = 'Dikemas';
+                            $processingColor = '#7A8450';
+                            $processingIcon = 'fa-box';
+                            
+                            if ($order->status === 'processing' && in_array($order->payment_method, ['bank_transfer', 'e_wallet'])) {
+                                $processingLabel = 'Menunggu Konfirmasi';
+                                $processingColor = '#F9C74F';
+                                $processingIcon = 'fa-clock';
+                            }
+                            
                             $statusConfig = [
-                                'pending' => ['color' => '#F9C74F', 'icon' => 'fa-clock', 'label' => 'Belum Dibayar'],
-                                'processing' => ['color' => '#7A8450', 'icon' => 'fa-box', 'label' => 'Dikemas'],
+                                'pending' => ['color' => '#F9C74F', 'icon' => 'fa-clock', 'label' => 'Menunggu Konfirmasi'],
+                                'processing' => ['color' => $processingColor, 'icon' => $processingIcon, 'label' => $processingLabel],
                                 'shipped' => ['color' => '#FF9CBF', 'icon' => 'fa-truck', 'label' => 'Dikirim'],
                                 'delivered' => ['color' => '#10B981', 'icon' => 'fa-check-circle', 'label' => 'Selesai'],
                                 'cancelled' => ['color' => '#EF4444', 'icon' => 'fa-times-circle', 'label' => 'Dibatalkan'],
@@ -117,6 +135,11 @@
                               style="background-color: {{ $config['color'] }};">
                             <i class="fas {{ $config['icon'] }} mr-2"></i>{{ $config['label'] }}
                         </span>
+                        @if($order->status === 'processing' && in_array($order->payment_method, ['bank_transfer', 'e_wallet']))
+                        <p class="text-xs text-gray-600 italic">
+                            <i class="fas fa-info-circle mr-1"></i>Menunggu admin mengkonfirmasi pembayaran
+                        </p>
+                        @endif
                     </div>
                 </div>
 
@@ -172,16 +195,16 @@
                             <i class="fas fa-info-circle mr-2"></i>Lihat Detail
                         </button>
                         @if($order->canBeCancelled())
-                        <form action="{{ route('orders.cancel', $order->id) }}" method="POST" class="inline">
+                        <form id="cancel-form-{{ $order->id }}" action="{{ route('orders.cancel', $order->id) }}" method="POST" class="inline" style="display: none;">
                             @csrf
                             @method('PATCH')
-                            <button type="submit" 
-                                    onclick="return confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')"
-                                    class="px-4 py-2 rounded-lg font-medium text-white transition-all hover:opacity-90"
-                                    style="background-color: #EF4444;">
-                                <i class="fas fa-times mr-2"></i>Batalkan
-                            </button>
                         </form>
+                        <button type="button" 
+                                onclick="cancelOrder({{ $order->id }})"
+                                class="px-4 py-2 rounded-lg font-medium text-white transition-all hover:opacity-90"
+                                style="background-color: #EF4444;">
+                            <i class="fas fa-times mr-2"></i>Batalkan
+                        </button>
                         @endif
                     </div>
                 </div>
@@ -268,17 +291,27 @@
                                             </div>
                                         </div>
 
-                                        @if($order->status != 'pending')
-                                        <!-- Pembayaran/Processing -->
+                                        <!-- Processing (Menunggu Konfirmasi atau Dikemas) -->
                                         <div class="relative pl-10">
+                                            @php
+                                                $isActive = in_array($order->status, ['processing', 'shipped', 'delivered']);
+                                                $processingBgColor = $isActive ? '#7A8450' : '#D1D5DB';
+                                                
+                                                // Show different label based on payment method
+                                                if ($order->payment_method === 'cod') {
+                                                    $processingLabel = 'Pesanan Dikemas';
+                                                } else {
+                                                    $processingLabel = 'Menunggu Konfirmasi Pembayaran';
+                                                }
+                                            @endphp
                                             <div class="absolute left-0 w-8 h-8 rounded-full flex items-center justify-center text-white"
-                                                 style="background-color: {{ in_array($order->status, ['processing', 'shipped', 'delivered']) ? '#7A8450' : '#D1D5DB' }};">
-                                                <i class="fas fa-box text-sm"></i>
+                                                 style="background-color: {{ $processingBgColor }};">
+                                                <i class="fas {{ $order->payment_method === 'cod' ? 'fa-box' : 'fa-clock' }} text-sm"></i>
                                             </div>
                                             <div>
-                                                <p class="font-medium text-gray-900">Pesanan Dikemas</p>
+                                                <p class="font-medium text-gray-900">{{ $processingLabel }}</p>
                                                 <p class="text-sm text-gray-500">
-                                                    @if(in_array($order->status, ['processing', 'shipped', 'delivered']))
+                                                    @if($isActive)
                                                         {{ $order->updated_at->format('d M Y, H:i') }}
                                                     @else
                                                         Menunggu
@@ -286,7 +319,6 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        @endif
 
                                         @if(in_array($order->status, ['shipped', 'delivered']))
                                         <!-- Dikirim -->
@@ -377,6 +409,76 @@
 
 @push('scripts')
 <script>
+// Custom Confirm Dialog with Pink Theme
+function showCustomConfirm(message, onConfirm) {
+    // Create overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    overlay.style.animation = 'fadeIn 0.2s ease-out';
+    
+    // Create dialog
+    const dialog = document.createElement('div');
+    dialog.className = 'bg-white rounded-lg shadow-2xl p-6 max-w-sm w-full mx-4';
+    dialog.style.animation = 'slideIn 0.3s ease-out';
+    
+    dialog.innerHTML = `
+        <div class="text-center">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full mb-4" style="background-color: #F9CDD5;">
+                <svg class="h-6 w-6" style="color: #B83556;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+            </div>
+            <p class="text-lg font-medium text-gray-900 mb-6">${message}</p>
+            <div class="flex gap-3">
+                <button class="cancel-btn flex-1 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:opacity-90" 
+                        style="background-color: #F9CDD5; color: #B83556;">
+                    Kembali
+                </button>
+                <button class="confirm-btn flex-1 px-4 py-2 rounded-lg font-medium text-white transition-all duration-200 hover:opacity-90" 
+                        style="background-color: #B83556;">
+                    Batalkan Pesanan
+                </button>
+            </div>
+        </div>
+    `;
+    
+    overlay.appendChild(dialog);
+    document.body.appendChild(overlay);
+    
+    // Add animations
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px) scale(0.95); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Handle buttons
+    const cancelBtn = dialog.querySelector('.cancel-btn');
+    const confirmBtn = dialog.querySelector('.confirm-btn');
+    
+    const closeDialog = () => {
+        overlay.style.animation = 'fadeIn 0.2s ease-out reverse';
+        setTimeout(() => overlay.remove(), 200);
+    };
+    
+    cancelBtn.addEventListener('click', closeDialog);
+    overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) closeDialog();
+    });
+    
+    confirmBtn.addEventListener('click', () => {
+        closeDialog();
+        onConfirm();
+    });
+}
+
 function toggleOrderDetail(orderId) {
     const element = document.getElementById(orderId);
     const isHidden = element.classList.contains('hidden');
@@ -396,6 +498,13 @@ function toggleOrderDetail(orderId) {
     } else {
         element.classList.add('hidden');
     }
+}
+
+// Handle cancel order
+function cancelOrder(orderId) {
+    showCustomConfirm('Apakah Anda yakin ingin membatalkan pesanan ini?', () => {
+        document.getElementById('cancel-form-' + orderId).submit();
+    });
 }
 </script>
 @endpush

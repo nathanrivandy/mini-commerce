@@ -69,7 +69,8 @@ class CheckoutController extends Controller
         $orderData = [
             'address' => $fullAddress,
             'phone' => $request->phone,
-            'notes' => $request->notes
+            'notes' => $request->notes,
+            'payment_method' => $request->payment_method
         ];
 
         $result = $this->orderService->createOrder(Auth::user(), $orderData);
@@ -79,7 +80,7 @@ class CheckoutController extends Controller
             $this->cartService->clearCart(Auth::user());
             
             return redirect()->route('orders.show', $result['order']->id)
-                            ->with('success', 'Pesanan berhasil dibuat! Silakan lakukan pembayaran.');
+                            ->with('success', 'Pesanan berhasil dibuat! Pesanan Anda sedang diproses.');
         }
 
         return redirect()->back()
