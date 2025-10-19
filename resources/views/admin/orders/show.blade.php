@@ -275,6 +275,52 @@
                 </div>
             </div>
 
+            <!-- Payment Method -->
+            <div class="bg-white rounded-lg shadow">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-lg font-medium text-gray-900">Metode Pembayaran</h3>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-start space-x-3">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 
+                                @if($order->payment_method === 'bank_transfer') bg-blue-100
+                                @elseif($order->payment_method === 'e_wallet') bg-purple-100
+                                @else bg-green-100
+                                @endif
+                                rounded-lg flex items-center justify-center">
+                                <i class="fas 
+                                    @if($order->payment_method === 'bank_transfer') fa-university text-blue-600
+                                    @elseif($order->payment_method === 'e_wallet') fa-wallet text-purple-600
+                                    @else fa-money-bill-wave text-green-600
+                                    @endif
+                                    text-lg"></i>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-gray-900">
+                                @if($order->payment_method === 'bank_transfer')
+                                    Transfer Bank
+                                @elseif($order->payment_method === 'e_wallet')
+                                    E-Wallet
+                                @else
+                                    Cash on Delivery (COD)
+                                @endif
+                            </p>
+                            <p class="text-sm text-gray-500 mt-1">
+                                @if($order->payment_method === 'bank_transfer')
+                                    Pembayaran melalui transfer bank
+                                @elseif($order->payment_method === 'e_wallet')
+                                    Pembayaran melalui e-wallet
+                                @else
+                                    Bayar di tempat saat barang diterima
+                                @endif
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Order Notes -->
             @if($order->notes)
             <div class="bg-white rounded-lg shadow">
@@ -286,21 +332,6 @@
                 </div>
             </div>
             @endif
-
-            <!-- Actions -->
-            <div class="bg-white rounded-lg shadow">
-                <div class="px-6 py-4 border-b border-gray-200">
-                    <h3 class="text-lg font-medium text-gray-900">Aksi</h3>
-                </div>
-                <div class="p-6 space-y-3">
-                    @if($order->canBeCancelled())
-                    <button type="button" id="cancel-order" data-order-id="{{ $order->id }}"
-                            class="w-full px-4 py-2 text-sm font-medium text-red-700 bg-red-50 border border-red-200 rounded-lg hover:bg-red-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                        <i class="fas fa-times mr-2"></i>Batalkan Pesanan
-                    </button>
-                    @endif
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -349,17 +380,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Cancel order
-    const cancelButton = document.getElementById('cancel-order');
-    if (cancelButton) {
-        cancelButton.addEventListener('click', function() {
-            const orderId = this.dataset.orderId;
-            if (confirm('Apakah Anda yakin ingin membatalkan pesanan ini?')) {
-                cancelOrder(orderId);
-            }
-        });
-    }
-
     function updateStatusStyling(select, status) {
         // Remove all status classes
         const statusClasses = ['bg-yellow-100', 'text-yellow-800', 'border-yellow-300',
@@ -387,26 +407,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 select.classList.add('bg-red-100', 'text-red-800', 'border-red-300');
                 break;
         }
-    }
-
-    function cancelOrder(orderId) {
-        fetch(`/admin/orders/${orderId}/cancel`, {
-            method: 'PATCH',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                window.location.reload();
-            } else {
-                showNotification(data.message || 'Gagal membatalkan pesanan', 'error');
-            }
-        })
-        .catch(error => {
-            showNotification('Terjadi kesalahan', 'error');
-        });
     }
 
     function showNotification(message, type = 'info') {
